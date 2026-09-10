@@ -1,0 +1,1112 @@
+/*
+ * قالب «دستیار» — استایل اصلی (نسخه ۲.۱.۱ — هیروهای ۵‌حالته + فوترهای ۵‌حالته + بخش‌های جدید صفحه اصلی)
+ * برند: سبز #17a16d + نعنایی #2fce96 + سرمه‌ای #242536 — فونت: وزیرمتن
+ * اسکوپ متغیرها: .dhm-home (محتوا) / .dhm-site-head,.dhm-drawer (هدر) / .dth-footer
+ * v2: صحنه هیرو با کارت‌های محصول شناور، کارت‌ها و سایه‌های نرم‌تر، هیروی روشن برگه‌ها.
+ * v2.1: هیروهای «اسپلیت/مداری/فرم»، سبک‌های هدر (۴ حالت)، بخش‌های کاتالوگ/ویدیو/مزایا،
+ *       سبک‌های برگه پنل (۵ حالت)، سوییچ هیروی جداگانه هر برگه.
+ * سبک «باکس کلاسیک» (هیروی سرمه‌ای نسخه ۱) کاملاً حفظ شده — از تنظیمات قابل انتخاب است.
+ */
+
+/* ---------- نوار پیشرفت لود آنی ---------- */
+#dth-progress{position:fixed;top:0;right:0;height:2.5px;background:#17a16d;width:0;z-index:100001;opacity:0;transition:width .25s ease,opacity .3s ease;pointer-events:none;box-shadow:0 0 8px rgba(23,161,109,.55)}
+body.admin-bar #dth-progress{top:32px}
+
+/* ---------- اعلان + هدر ---------- */
+.dhm-announce{background:#242536;color:#fff;font-family:"Vazirmatn","IRANSans",Tahoma,sans-serif;font-size:13px;text-align:center;padding:8px 14px}
+.dhm-announce a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.45);text-underline-offset:3px}
+.dhm-site-head,.dhm-drawer{--dhm-green:#17a16d;--dhm-green-dark:#12875c;--dhm-navy:#242536;--dhm-line:#e6e8ef;--dhm-text:#2b2c3a}
+.dhm-site-head{position:sticky;top:0;z-index:99989;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--dhm-line);font-family:"Vazirmatn","IRANSans",Tahoma,sans-serif}
+body.admin-bar .dhm-site-head{top:32px}
+.dhm-head-in{max-width:1140px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:20px}
+.dhm-head-in *{box-sizing:border-box}
+.dhm-logo{font-weight:900;font-size:19px;color:var(--dhm-navy);text-decoration:none;display:inline-flex;align-items:center;gap:5px;line-height:1}
+.dhm-ldot{width:7px;height:7px;border-radius:50%;background:var(--dhm-green)}
+.dhm-logo-img img{max-height:40px;width:auto;display:block}
+.dhm-menu{list-style:none;display:flex;gap:20px;margin:0;padding:0}
+.dhm-menu li{margin:0;position:relative}
+.dhm-menu a{color:#3a3c4e;text-decoration:none;font-size:13.5px;font-weight:700;transition:color .12s;display:block;padding:4px 0}
+.dhm-menu a:hover,.dhm-menu .current-menu-item>a,.dhm-menu .current_page_item>a{color:var(--dhm-green)}
+.dhm-menu .sub-menu{list-style:none;position:absolute;top:100%;right:0;min-width:190px;background:#fff;border:1px solid var(--dhm-line);border-radius:12px;box-shadow:0 16px 34px rgba(36,37,54,.13);padding:8px;margin:6px 0 0;opacity:0;visibility:hidden;transform:translateY(6px);transition:.15s}
+.dhm-menu li:hover>.sub-menu{opacity:1;visibility:visible;transform:none}
+.dhm-menu .sub-menu a{padding:8px 12px;border-radius:8px}
+.dhm-menu .sub-menu a:hover{background:#f6f7fa}
+.dhm-cta{margin-inline-start:auto;display:flex;gap:9px;align-items:center}
+/* v1.0.4 — چیپ کاربر واردشده (آواتار/لوگو + نام) به‌جای دکمه ورود */
+.dhm-userchip{display:inline-flex;align-items:center;gap:9px;background:#f2faf6;border:1.5px solid #cdeedd;color:#0f5132;border-radius:999px;padding:4px 6px 4px 14px;font-size:13px;font-weight:800;text-decoration:none;transition:.15s;line-height:1}
+.dhm-userchip:hover{border-color:var(--dhm-green,#17a16d);background:#e9f6ee;color:#12875c}
+.dhm-userchip-img{width:30px;height:30px;border-radius:50%!important;object-fit:cover;flex:none;border:1.5px solid #fff;box-shadow:0 1px 4px rgba(15,81,50,.18)}
+.dhm-userchip-name{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dhm-userchip svg{flex:none}
+.dhm-userchip-drawer{border-radius:14px;padding:8px 14px;justify-content:flex-start}
+.dhm-userchip-drawer small{margin-inline-start:auto;font-weight:600;color:#5f7a6d}
+.dhm-burger{display:none;background:none;border:0;color:var(--dhm-navy);padding:6px;margin-inline-start:auto;cursor:pointer}
+.dhm-drawer{position:fixed;inset:0;z-index:100000;pointer-events:none;font-family:"Vazirmatn","IRANSans",Tahoma,sans-serif}
+.dhm-drawer-bg{position:absolute;inset:0;background:rgba(36,37,54,.45);opacity:0;transition:opacity .2s}
+.dhm-drawer-nav{position:absolute;top:0;bottom:0;right:0;width:min(320px,82vw);background:#fff;padding:18px;display:flex;flex-direction:column;gap:4px;transform:translateX(102%);transition:transform .22s ease;box-shadow:-12px 0 32px rgba(36,37,54,.14);overflow-y:auto}
+.dhm-drawer-nav .dhm-menu{flex-direction:column;gap:2px}
+.dhm-drawer-nav a:not(.dhm-btn){color:#3a3c4e;text-decoration:none;font-size:14.5px;font-weight:700;padding:11px 8px;border-radius:9px}
+.dhm-drawer-nav a:not(.dhm-btn):hover{background:#f6f7fa;color:#17a16d}
+.dhm-drawer-nav .sub-menu{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;padding:0 14px 0 0;margin:0;background:transparent}
+.dhm-drawer.dhm-show{pointer-events:auto}
+.dhm-drawer.dhm-show .dhm-drawer-bg{opacity:1}
+.dhm-drawer.dhm-show .dhm-drawer-nav{transform:none}
+.dhm-drawer-close{align-self:flex-start;background:#f6f7fa;border:0;border-radius:9px;color:#242536;padding:8px;cursor:pointer;margin-bottom:8px}
+.dhm-drawer-cta{justify-content:center;margin-top:8px}
+
+/* ---------- محتوا (اسکوپ dhm-home) ---------- */
+.dhm-home{--dhm-green:#17a16d;--dhm-green-dark:#12875c;--dhm-mint:#2fce96;--dhm-navy:#242536;--dhm-line:#e8eaf2;--dhm-bg:#f6f8fb;--dhm-text:#2b2c3a;--dhm-muted:#6b6e84;font-family:"Vazirmatn","IRANSans",Tahoma,sans-serif;color:var(--dhm-text);line-height:1.8;min-height:50vh}
+.dhm-home *{box-sizing:border-box}
+.dhm-in{max-width:1140px;margin:0 auto;padding:0 20px}
+.dhm-home .dhm-sec{padding:58px 0}
+.dhm-sec-head{text-align:center;max-width:640px;margin:0 auto 34px}
+.dhm-sec-head h2{font-size:25px;font-weight:900;color:var(--dhm-navy);margin:0 0 8px}
+.dhm-sec-head p{color:var(--dhm-muted);font-size:14px;margin:0}
+.dhm-btn{display:inline-flex;align-items:center;gap:7px;padding:12px 24px;border-radius:12px;font-weight:800;font-size:14px;text-decoration:none;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s,transform .2s,box-shadow .2s;font-family:inherit;cursor:pointer}
+.dhm-site-head .dhm-btn{padding:9px 18px;font-size:13px;border-radius:10px}
+.dhm-btn svg{vertical-align:text-bottom}
+.dhm-btn-primary{background:var(--dhm-green);color:#fff!important;box-shadow:0 8px 20px rgba(23,161,109,.3)}
+.dhm-btn-primary:hover{background:var(--dhm-green-dark);color:#fff;transform:translateY(-2px);box-shadow:0 12px 26px rgba(23,161,109,.4)}
+.dhm-btn-outline{color:var(--dhm-navy);border-color:var(--dhm-line);background:#fff}
+.dhm-btn-outline:hover{border-color:var(--dhm-green);color:var(--dhm-green)}
+.dhm-js .dhm-rv{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+.dhm-js .dhm-rv.dhm-vi{opacity:1;transform:none}
+
+/* ---------- هیروی باکس کلاسیک (سبک نسخه ۱ — از تنظیمات قابل انتخاب) ---------- */
+.dhm-home .dhm-hero{background:linear-gradient(135deg,#242536,#2e2f47);border-radius:20px;margin:14px auto 0;max-width:1180px;overflow:hidden;position:relative;color:#fff}
+.dhm-home .dhm-hero::before{content:"";position:absolute;top:-140px;inset-inline-start:-100px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(23,161,109,.34),transparent 65%)}
+.dhm-home .dhm-hero::after{content:"";position:absolute;bottom:-160px;inset-inline-end:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(47,206,150,.16),transparent 65%)}
+.dhm-hero-in{position:relative;z-index:1;padding:62px 36px 70px}
+.dhm-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);color:#d7fae9;border-radius:999px;padding:6px 16px;font-size:12.5px;font-weight:700;margin-bottom:20px}
+.dhm-badge svg{color:var(--dhm-mint)}
+.dhm-hero h1{font-size:36px;font-weight:900;line-height:1.6;margin:0 0 12px;color:#fff}
+.dhm-hl{color:var(--dhm-mint)}
+.dhm-hero-sub{color:rgba(255,255,255,.78);font-size:15px;max-width:620px;margin:0 0 26px}
+.dhm-hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.dhm-btn-ghost{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28);color:#fff}
+.dhm-btn-ghost:hover{background:rgba(255,255,255,.15);color:#fff}
+.dhm-hero-points{list-style:none;display:flex;gap:22px;flex-wrap:wrap;margin:30px 0 0;padding:0}
+.dhm-hero-points li{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.82)}
+.dhm-hero-points svg{color:var(--dhm-mint);flex-shrink:0}
+
+/* ================================================================
+ *  v2.0.0 — هیروی جدید: متن + کارت‌های شناور از محصولات کاتالوگ
+ * ============================================================ */
+.dhm-home .dhm-hero2{position:relative;overflow:hidden;background:linear-gradient(180deg,#f2faf6 0%,#f6f8fb 100%);border-bottom:1px solid var(--dhm-line)}
+.dhm-home .dhm-hero2::before{content:"";position:absolute;top:-180px;inset-inline-start:-120px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(47,206,150,.14),transparent 66%)}
+.dhm-hero2-in{position:relative;z-index:1;display:grid;grid-template-columns:1.02fr 1fr;gap:36px;align-items:center;padding:54px 20px 74px}
+/* ستون متن */
+.dhm-hero2-copy .dhm-badge-l{background:#fff;border:1px solid var(--dhm-line);color:var(--dhm-green);box-shadow:0 2px 10px rgba(36,37,54,.05)}
+.dhm-hero2-copy .dhm-badge-l::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--dhm-mint);box-shadow:0 0 0 3px rgba(47,206,150,.2)}
+.dhm-hero2 h1{font-size:40px;font-weight:900;line-height:1.5;margin:0 0 14px;color:var(--dhm-navy);letter-spacing:-.3px}
+.dhm-hero2 .dhm-hl{color:var(--dhm-green);display:inline-block;position:relative;padding-bottom:6px}
+.dhm-hero2 .dhm-hl::after{content:"";position:absolute;right:0;left:0;bottom:0;height:5px;border-radius:4px;background:linear-gradient(to left,var(--dhm-mint),rgba(47,206,150,.15))}
+.dhm-hero2 .dhm-hero-sub{color:var(--dhm-muted);font-size:15px;max-width:500px;margin:0 0 26px;line-height:2}
+.dhm-hero2 .dhm-hero-btns{margin-bottom:4px}
+.dhm-hero2-stats{display:flex;gap:26px;margin-top:26px;flex-wrap:wrap}
+.dhm-hero2-stat b{display:block;font-size:19px;font-weight:900;color:var(--dhm-navy)}
+.dhm-hero2-stat span{font-size:12px;color:var(--dhm-muted);font-weight:700}
+/* صحنه کارت‌ها */
+.dhm-hero2-stage{position:relative;min-height:480px}
+.dhm-h2-blob{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(47,206,150,.16),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.dhm-h2-ring{position:absolute;border:1.5px dashed rgba(23,161,109,.26);border-radius:50%;pointer-events:none}
+.dhm-h2-r1{width:430px;height:430px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.dhm-h2-r2{width:290px;height:290px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(47,206,150,.3)}
+@keyframes dhmFloaty{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-14px) rotate(var(--rot,0deg))}}
+.dhm-pcard{position:absolute;background:#fff;border-radius:18px;box-shadow:0 14px 38px rgba(36,37,54,.12);padding:12px;width:196px;border:1px solid rgba(232,234,242,.8);animation:dhmFloaty var(--dur,6s) ease-in-out infinite}
+.dhm-pcard h4{font-size:13px;font-weight:800;color:var(--dhm-navy);margin:10px 2px 6px}
+.dhm-pimg{height:118px;border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative}
+.dhm-pimg svg{width:56px;height:56px;stroke:#fff;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.95}
+.dhm-ptint-1{background:linear-gradient(135deg,#17a16d,#2fce96)}
+.dhm-ptint-2{background:linear-gradient(135deg,#242536,#3a3c55)}
+.dhm-ptint-3{background:linear-gradient(135deg,#ff9f6e,#ff7b54)}
+.dhm-ptint-4{background:linear-gradient(135deg,#5b8def,#7b6ff0)}
+.dhm-ppr{display:flex;align-items:baseline;gap:7px;margin:0 2px}
+.dhm-ppr b{color:var(--dhm-green);font-size:14px;font-weight:900}
+.dhm-ppr s{color:#b7bac9;font-size:11px}
+.dhm-poff{position:absolute;top:20px;inset-inline-start:20px;background:#ff5d5d;color:#fff;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;box-shadow:0 4px 10px rgba(255,93,93,.35)}
+/* کارت شاخص وسط */
+.dhm-pcard-main{width:230px;top:150px;left:150px;--rot:-2deg;--dur:7s;z-index:4;padding:14px}
+.dhm-pcard-main .dhm-pimg{height:138px}
+.dhm-pmargin{display:flex;justify-content:space-between;align-items:center;margin:10px 2px 12px;background:#f2fbf7;border:1px dashed rgba(23,161,109,.4);border-radius:10px;padding:7px 10px}
+.dhm-pmargin span{font-size:11px;color:var(--dhm-muted);font-weight:700}
+.dhm-pmargin b{color:var(--dhm-green);font-size:13.5px;font-weight:900}
+.dhm-pbtn{width:100%;background:var(--dhm-navy);color:#fff!important;border:none;border-radius:10px;padding:10px;font-family:inherit;font-weight:800;font-size:12.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:.2s;text-decoration:none}
+.dhm-pbtn:hover{background:var(--dhm-green)}
+.dhm-pbtn svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+/* کارت‌های کوچک پیرامونی */
+.dhm-pcard-mini{z-index:3}
+.dhm-ppos1{top:38px;left:8px;--rot:3deg;--dur:6.2s}
+.dhm-ppos2{top:74px;right:6px;left:auto;--rot:-3.5deg;--dur:5.6s;width:186px}
+.dhm-ppos3{bottom:34px;left:14px;top:auto;--rot:2.5deg;--dur:6.8s;width:178px}
+/* اعلان‌های شناور */
+.dhm-pchip{position:absolute;background:#fff;border-radius:999px;box-shadow:0 10px 26px rgba(36,37,54,.13);padding:9px 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--dhm-navy);animation:dhmFloaty var(--dur,5s) ease-in-out infinite;border:1px solid rgba(232,234,242,.9);z-index:5;white-space:nowrap}
+.dhm-pchip svg{width:16px;height:16px;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.dhm-pnote1{bottom:96px;right:16px;--dur:5.4s;--rot:1.5deg}
+.dhm-pnote1 svg{stroke:var(--dhm-green)}
+.dhm-pnote2{top:6px;left:120px;--dur:6.4s;--rot:-1.5deg}
+.dhm-pnote2 svg{stroke:var(--dhm-navy)}
+
+/* ---------- آمار ---------- */
+.dhm-sec-stats{padding:0}
+.dhm-home .dhm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:#fff;border:1px solid var(--dhm-line);border-radius:16px;box-shadow:0 14px 34px rgba(36,37,54,.09);padding:24px 12px}
+.dhm-hero-on .dhm-stats{margin-top:-46px;position:relative;z-index:2}
+.dhm-stat{text-align:center;padding:6px 8px}
+.dhm-stat-n{font-size:25px;font-weight:900;color:var(--dhm-navy);line-height:1.3}
+.dhm-stat-sfx{color:var(--dhm-green);font-weight:900}
+.dhm-stat-l{font-size:12.5px;color:var(--dhm-muted);font-weight:700}
+
+/* ---------- امکانات / مراحل / تعرفه‌ها / نظرات / FAQ / CTA ---------- */
+.dhm-feats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.dhm-feat{background:#fff;border:1px solid var(--dhm-line);border-radius:16px;padding:26px 22px;transition:transform .18s,box-shadow .18s,border-color .18s}
+.dhm-feat:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(36,37,54,.1);border-color:rgba(23,161,109,.35)}
+.dhm-feat-ic{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:14px;margin-bottom:14px;line-height:0;transition:transform .18s}
+.dhm-feat:hover .dhm-feat-ic{transform:scale(1.08)}
+.dhm-tint-1 .dhm-feat-ic{color:#17a16d;background:#17a16d1a}
+.dhm-tint-2 .dhm-feat-ic{color:#242536;background:#24253614}
+.dhm-tint-3 .dhm-feat-ic{color:#b45309;background:#b453091a}
+.dhm-tint-4 .dhm-feat-ic{color:#475569;background:#4755691a}
+.dhm-feat h3{font-size:15.5px;font-weight:800;color:var(--dhm-navy);margin:0 0 6px}
+.dhm-feat p{font-size:13px;color:var(--dhm-muted);margin:0;line-height:1.9}
+.dhm-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative}
+.dhm-home .dhm-steps::before{content:"";position:absolute;top:23px;right:14%;left:14%;border-top:2px dashed #d8dce6}
+.dhm-step{text-align:center;position:relative;z-index:1;padding:0 8px}
+.dhm-step-n{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:#fff;border:2px solid var(--dhm-green);color:var(--dhm-green);font-size:17px;font-weight:900;margin-bottom:12px;box-shadow:0 4px 12px rgba(23,161,109,.14)}
+.dhm-step h3{font-size:14.5px;font-weight:800;color:var(--dhm-navy);margin:0 0 6px}
+.dhm-step p{font-size:12.5px;color:var(--dhm-muted);margin:0;line-height:1.9}
+.dhm-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.dhm-plan{display:flex;flex-direction:column;background:#fff;border:1px solid var(--dhm-line);border-radius:16px;padding:28px 24px;position:relative;transition:transform .18s,box-shadow .18s}
+.dhm-plan:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(36,37,54,.1)}
+.dhm-plan-hot{border:2px solid var(--dhm-green);box-shadow:0 14px 30px rgba(23,161,109,.14);transform:scale(1.02)}
+.dhm-plan-hot:hover{transform:scale(1.03) translateY(-2px)}
+.dhm-plan-badge{position:absolute;top:-13px;inset-inline-start:22px;background:var(--dhm-green);color:#fff;font-size:11.5px;font-weight:800;border-radius:999px;padding:4px 14px}
+.dhm-plan h3{font-size:15px;font-weight:800;color:var(--dhm-navy);margin:0 0 10px}
+.dhm-plan-price{margin-bottom:14px}
+.dhm-plan-price strong{font-size:27px;font-weight:900;color:var(--dhm-navy)}
+.dhm-plan-price span{display:block;font-size:12px;color:var(--dhm-muted);font-weight:700}
+.dhm-plan ul{list-style:none;margin:0 0 18px;padding:0;flex:1}
+.dhm-plan li{display:flex;align-items:flex-start;gap:8px;font-size:13px;padding:5px 0;color:var(--dhm-text)}
+.dhm-plan li svg{color:var(--dhm-green);flex-shrink:0;margin-top:4px;width:15px;height:15px}
+.dhm-plan .dhm-btn{justify-content:center}
+.dhm-testis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.dhm-testi{background:#fff;border:1px solid var(--dhm-line);border-radius:16px;padding:24px 22px;transition:transform .18s,box-shadow .18s}
+.dhm-testi:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(36,37,54,.1)}
+.dhm-testi-ic{display:inline-flex;color:#c3c7d6;margin-bottom:10px;line-height:0}
+.dhm-testi p{font-size:13.5px;margin:0 0 16px;line-height:2}
+.dhm-testi footer{display:flex;align-items:center;gap:10px;margin:0}
+.dhm-testi-av{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#17a16d1a;color:var(--dhm-green);flex-shrink:0}
+.dhm-testi-w strong{display:block;font-size:13px;color:var(--dhm-navy);font-weight:800}
+.dhm-testi-w em{font-style:normal;font-size:11.5px;color:var(--dhm-muted);font-weight:700}
+.dhm-faqs{max-width:820px;margin:0 auto}
+.dhm-faq{background:#fff;border:1px solid var(--dhm-line);border-radius:14px;margin-bottom:10px;transition:border-color .15s}
+.dhm-faq:hover{border-color:rgba(23,161,109,.3)}
+.dhm-faq summary{display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none;cursor:pointer;padding:15px 18px;font-size:14px;font-weight:800;color:var(--dhm-navy)}
+.dhm-faq summary::-webkit-details-marker{display:none}
+.dhm-faq-ic{flex-shrink:0;width:26px;height:26px;border-radius:8px;background:#f6f7fa;display:inline-flex;align-items:center;justify-content:center;color:var(--dhm-green);font-weight:900;font-size:16px;line-height:1}
+.dhm-faq-ic::after{content:"+"}
+.dhm-faq[open] .dhm-faq-ic::after{content:"−"}
+.dhm-faq-a{padding:0 18px 16px;font-size:13.5px;color:var(--dhm-text);line-height:2}
+.dhm-home .dhm-cta-band{background:linear-gradient(135deg,#242536,#2e2f47);border-radius:18px;padding:36px 34px;display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;color:#fff;position:relative;overflow:hidden}
+.dhm-home .dhm-cta-band::after{content:"";position:absolute;top:-90px;inset-inline-end:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(47,206,150,.18),transparent 65%);pointer-events:none}
+.dhm-cta-r{display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:relative;z-index:1}
+.dhm-cta-ic{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.1);color:var(--dhm-mint);flex-shrink:0;line-height:0}
+.dhm-cta-band h3{font-size:19px;font-weight:900;margin:0 0 4px;color:#fff}
+.dhm-cta-band p{font-size:13.5px;color:rgba(255,255,255,.75);margin:0}
+.dhm-cta-band .dhm-btn{position:relative;z-index:1}
+
+/* ---------- هیروی صفحات داخلی (v2: سبک روشن هماهنگ با طراحی جدید) ---------- */
+.dth-page-hero{background:linear-gradient(135deg,#242536,#2e2f47);color:#fff;position:relative;overflow:hidden}
+.dth-page-hero::before{content:"";position:absolute;top:-130px;inset-inline-start:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(23,161,109,.26),transparent 65%)}
+.dth-page-hero::after{content:"";position:absolute;bottom:-120px;inset-inline-end:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(47,206,150,.18),transparent 65%)}
+.dth-page-hero .dhm-in{position:relative;z-index:1;padding:42px 20px}
+.dth-page-hero h1{font-size:28px;font-weight:900;margin:0;color:#fff}
+.dth-page-hero p{margin:8px 0 0;color:rgba(255,255,255,.78);font-size:14px}
+.dth-hero-slim .dhm-in{padding:30px 20px}
+.dth-ph-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:4px 14px;font-size:12px;font-weight:700;color:#d7fae9;margin-bottom:12px}
+.dth-ph-chip svg{color:var(--dhm-mint,#2fce96)}
+.dth-ph-chip a{color:#d7fae9;text-decoration:none}
+
+/* ---------- درباره ما ---------- */
+.dth-about{display:grid;grid-template-columns:1.4fr 1fr;gap:34px;align-items:start;background:#fff;border:1px solid var(--dhm-line);border-radius:18px;padding:34px 32px}
+.dth-about-text p{margin:0 0 14px;font-size:15px;line-height:2.1}
+.dth-about-points{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.dth-about-points li{display:flex;align-items:center;gap:10px;background:#f6f9f7;border:1px solid #e6f0ea;border-radius:12px;padding:13px 16px;font-size:13.5px;font-weight:700;color:#2b3a33}
+.dth-about-points svg{color:var(--dhm-green);flex-shrink:0}
+
+/* ---------- تماس ---------- */
+.dth-contact{display:grid;grid-template-columns:1fr 1.2fr;gap:22px;align-items:start}
+.dth-contact-formonly{grid-template-columns:1fr;max-width:640px;margin:0 auto}
+.dth-cinfo{display:grid;gap:12px}
+.dth-ci{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--dhm-line);border-radius:14px;padding:18px 20px}
+.dth-ci-ic{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#17a16d1a;color:var(--dhm-green);flex-shrink:0}
+.dth-ci strong{display:block;font-size:12px;color:var(--dhm-muted);font-weight:800}
+.dth-ci div>span:last-child,.dth-ci span[dir]{font-size:14.5px;font-weight:800;color:var(--dhm-navy)}
+.dth-form{background:#fff;border:1px solid var(--dhm-line);border-radius:16px;padding:26px 24px;display:grid;gap:14px}
+.dth-form h3{margin:0;font-size:16px;font-weight:900;color:var(--dhm-navy)}
+.dth-form label{display:grid;gap:6px;font-size:12.5px;font-weight:800;color:var(--dhm-navy)}
+.dth-form input,.dth-form textarea{border:1px solid var(--dhm-line);border-radius:10px;padding:11px 14px;font-family:inherit;font-size:14px;width:100%}
+.dth-form input:focus,.dth-form textarea:focus{outline:none;border-color:var(--dhm-green);box-shadow:0 0 0 3px #17a16d22}
+.dth-frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dth-notice{border-radius:10px;padding:12px 16px;font-size:13px;font-weight:700}
+.dth-notice-ok{background:#e9f6ee;border:1px solid #bfe6d2;color:#166b47}
+.dth-notice-err{background:#fdeeec;border:1px solid #f5c9c4;color:#8c1f14}
+
+/* ---------- دریافت پلاگین ---------- */
+.dth-download{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;align-items:start}
+.dth-dl-card{background:#fff;border:1px solid var(--dhm-line);border-radius:18px;padding:32px 28px;text-align:center}
+.dth-dl-ic{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:18px;background:#17a16d1a;color:var(--dhm-green);margin-bottom:14px}
+.dth-dl-ic svg{width:28px;height:28px}
+.dth-dl-ver{display:inline-block;background:#e9f6ee;border:1px solid #bfe6d2;color:#166b47;border-radius:999px;padding:4px 16px;font-size:12.5px;font-weight:800;margin-bottom:16px}
+.dth-dl-btn{width:100%;justify-content:center;font-size:15px;padding:14px 22px;margin-bottom:18px}
+.dth-dl-feats{list-style:none;margin:0;padding:0;text-align:right;display:grid;gap:9px}
+.dth-dl-feats li{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:700;color:var(--dhm-text)}
+.dth-dl-feats svg{color:var(--dhm-green);flex-shrink:0}
+.dth-dl-side{display:grid;gap:16px}
+.dth-note{display:flex;gap:12px;background:#fff8ec;border:1px solid #f3e2bb;border-radius:14px;padding:16px 18px}
+.dth-note svg{color:#b45309;flex-shrink:0;margin-top:3px}
+.dth-note p{margin:0;font-size:13px;line-height:2;color:#6b5a33}
+.dth-dl-steps{background:#fff;border:1px solid var(--dhm-line);border-radius:14px;padding:20px 22px}
+.dth-dl-steps h3{margin:0 0 10px;font-size:14.5px;font-weight:900;color:var(--dhm-navy)}
+.dth-dl-steps ol{margin:0 0 16px;padding:0 18px 0 0;font-size:13px;line-height:2.1;color:var(--dhm-text)}
+
+/* ---------- روند پرداخت ---------- */
+.dth-pay{max-width:760px;margin:0 auto;position:relative}
+.dth-pay::before{content:"";position:absolute;top:10px;bottom:10px;right:22px;border-right:2px dashed #d8dce6}
+.dth-pay-step{display:flex;gap:18px;margin-bottom:22px;position:relative}
+.dth-pay-n{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:#fff;border:2px solid var(--dhm-green);color:var(--dhm-green);font-size:17px;font-weight:900;flex-shrink:0;position:relative;z-index:1;box-shadow:0 4px 12px rgba(23,161,109,.14)}
+.dth-pay-body{background:#fff;border:1px solid var(--dhm-line);border-radius:14px;padding:18px 20px;flex:1;transition:border-color .15s,box-shadow .15s}
+.dth-pay-body:hover{border-color:rgba(23,161,109,.35);box-shadow:0 10px 24px rgba(36,37,54,.07)}
+.dth-pay-body h3{margin:0 0 6px;font-size:15px;font-weight:900;color:var(--dhm-navy)}
+.dth-pay-body p{margin:0;font-size:13px;color:var(--dhm-muted);line-height:2}
+.dth-pay-cta .dhm-cta-band{margin-top:8px}
+
+/* ---------- وبلاگ / کارت‌ها ---------- */
+.dth-searchbar{display:flex;gap:10px;margin-bottom:30px;max-width:560px}
+.dth-searchbar input{flex:1;border:1px solid var(--dhm-line);border-radius:12px;padding:11px 16px;font-family:inherit;font-size:14px}
+.dth-searchbar input:focus{outline:none;border-color:var(--dhm-green);box-shadow:0 0 0 3px #17a16d22}
+.dth-posts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.dth-card{background:#fff;border:1px solid var(--dhm-line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s}
+.dth-card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(36,37,54,.1)}
+.dth-card-thumb{display:block;aspect-ratio:16/9;background:#eef0f5}
+.dth-card-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.dth-card-noimg{display:flex;align-items:center;justify-content:center;height:100%;color:#b9bdcf;background:linear-gradient(135deg,#eef0f5,#e4e7ef)}
+.dth-card-noimg svg{width:42px;height:42px}
+.dth-card-body{padding:18px 18px 16px;display:flex;flex-direction:column;flex:1}
+.dth-card-body h3{margin:0 0 8px;font-size:15px;font-weight:800;line-height:1.7}
+.dth-card-body h3 a{color:var(--dhm-navy);text-decoration:none}
+.dth-card-ex{margin:0 0 14px;font-size:12.5px;color:var(--dhm-muted);line-height:1.9;flex:1}
+.dth-card-meta{display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:var(--dhm-muted);font-weight:700}
+.dth-card-meta svg{width:13px;height:13px;vertical-align:-2px;margin-inline-end:3px}
+.dth-card-more{color:var(--dhm-green);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:4px}
+.dth-empty{grid-column:1/-1;text-align:center;background:#fff;border:1.5px dashed var(--dhm-line);border-radius:16px;padding:52px 20px;color:var(--dhm-muted)}
+.dth-empty svg{width:40px;height:40px;color:#c3c7d6;margin-bottom:10px}
+.dth-empty h3{margin:0 0 6px;color:var(--dhm-navy)}
+.dth-empty p{margin:0}
+nav.pagination,.dhm-home .pagination{margin-top:34px;text-align:center}
+.dhm-home .page-numbers{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;border:1px solid var(--dhm-line);border-radius:10px;background:#fff;color:var(--dhm-navy);font-weight:800;font-size:13.5px;text-decoration:none;padding:0 12px;margin:0 3px}
+.dhm-home .page-numbers.current{background:var(--dhm-green);border-color:var(--dhm-green);color:#fff}
+
+/* ---------- تک‌نوشته ---------- */
+.dth-article{max-width:800px}
+.dth-single-thumb{margin:0 0 22px;border-radius:16px;overflow:hidden}
+.dth-single-thumb img{width:100%;height:auto;display:block}
+.dth-single-meta{display:flex;gap:16px;align-items:center;font-size:12.5px;font-weight:700;color:rgba(255,255,255,.75)}
+.dth-single-meta svg{width:14px;height:14px;vertical-align:-2px;margin-inline-end:4px;color:var(--dhm-mint,#2fce96)}
+.dth-content{font-size:15px;line-height:2.15}
+.dth-content p{margin:0 0 16px}
+.dth-content h2,.dth-content h3,.dth-content h4{color:var(--dhm-navy);font-weight:900;line-height:1.7;margin:26px 0 12px}
+.dth-content img{max-width:100%;height:auto;border-radius:12px}
+.dth-content ul,.dth-content ol{padding:0 22px 0 0}
+.dth-content blockquote{margin:18px 0;padding:14px 20px;border-right:3px solid var(--dhm-green);background:#f6f9f7;border-radius:10px}
+.dth-postnav{display:flex;justify-content:space-between;gap:12px;margin-top:30px;border-top:1px solid var(--dhm-line);padding-top:20px;font-weight:800;font-size:13px}
+.dth-postnav a{color:var(--dhm-green);text-decoration:none}
+.dth-comments{margin-top:34px;background:#fff;border:1px solid var(--dhm-line);border-radius:16px;padding:24px}
+.dth-comments h3{font-size:15px;font-weight:900;color:var(--dhm-navy);margin:0 0 14px}
+.dth-comment-list{list-style:none;margin:0 0 18px;padding:0}
+.dth-comment-list .comment-body{background:#f6f7fa;border-radius:12px;padding:14px 16px;margin-bottom:10px;font-size:13px}
+.dth-comments .comment-form label{display:block;font-size:12.5px;font-weight:800;margin-bottom:6px}
+.dth-comments .comment-form input:not(.submit),.dth-comments .comment-form textarea{width:100%;border:1px solid var(--dhm-line);border-radius:10px;padding:10px 14px;font-family:inherit;font-size:14px;margin-bottom:12px}
+.dth-comments .comment-form .submit{background:var(--dhm-green);color:#fff;border:0;border-radius:10px;padding:11px 26px;font-family:inherit;font-weight:800;font-size:13.5px;cursor:pointer}
+
+/* ---------- ورود/پنل/کاتالوگ (هم‌نشینی با افزونه‌ها) ---------- */
+.dth-auth{max-width:560px;margin:0 auto}
+.dth-auth .dp,.dth-auth .dp *,.dhm-home .dp,.dhm-home .dc{box-sizing:border-box}
+.dth-woo{background:#fff;border:1px solid var(--dhm-line);border-radius:16px;padding:30px}
+.dth-faq-cta{text-align:center;margin-top:30px}
+.dth-faq-cta p{margin:0 0 12px;font-weight:800;color:var(--dhm-navy)}
+
+/* ---------- ۴۰۴ ---------- */
+.dth-404{text-align:center;background:#fff;border:1.5px dashed var(--dhm-line);border-radius:20px;padding:60px 24px;max-width:640px;margin:0 auto}
+.dth-404-num{font-size:76px;font-weight:900;color:var(--dhm-green);line-height:1}
+.dth-404 h1{font-size:22px;font-weight:900;color:var(--dhm-navy);margin:12px 0 6px}
+.dth-404 p{color:var(--dhm-muted);margin:0 0 22px}
+.dth-404-links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- فوتر ---------- */
+.dth-footer{--dhm-green:#17a16d;--dhm-green-dark:#12875c;--dhm-mint:#2fce96;--dhm-navy:#242536;background:var(--dhm-navy);color:rgba(255,255,255,.82);font-family:"Vazirmatn","IRANSans",Tahoma,sans-serif;margin-top:0}
+.dth-footer *{box-sizing:border-box}
+.dth-footer-in{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:26px;padding:44px 20px 34px}
+.dth-footer .dhm-logo{color:#fff;font-size:20px}
+.dth-fabout{font-size:13px;line-height:2;margin:14px 0 0;color:rgba(255,255,255,.72)}
+.dth-ftrust{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.6);margin:14px 0 0}
+.dth-ftrust svg{color:var(--dhm-mint)}
+.dth-fcol h4{color:#fff;font-size:13.5px;font-weight:900;margin:0 0 14px;position:relative;padding-bottom:8px}
+.dth-fcol h4::after{content:"";position:absolute;bottom:0;right:0;width:26px;height:2px;border-radius:2px;background:var(--dhm-green)}
+.dth-flist{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.dth-flist a{color:rgba(255,255,255,.72);text-decoration:none;font-size:13px;font-weight:700;transition:color .12s}
+.dth-flist a:hover{color:var(--dhm-mint)}
+.dth-fcontact li{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:rgba(255,255,255,.72)}
+.dth-fcontact svg{color:var(--dhm-mint);flex-shrink:0}
+.dth-copy{border-top:1px solid rgba(255,255,255,.12);padding:14px 0;font-size:12px;color:rgba(255,255,255,.55)}
+.dth-copy .dhm-in{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.dth-credit{color:rgba(255,255,255,.45)}
+/* v2.4.1 — باکس‌های مجوز فوتر (اینماد/درگاه پرداخت/…) */
+.dth-trust-row{border-top:1px solid rgba(255,255,255,.12)}
+.dth-trust-in{max-width:1140px;margin:0 auto;padding:22px 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px}
+/* v2.4.7 — رفع باگ: قاب ثابت + overflow:hidden قبلی لوگوهای بلندتر (مثل نماد اینماد) را می‌برید.
+   حالا باکس فقط حداقل‌اندازه دارد و بدون برش، با محتوایش بزرگ می‌شود؛ فقط تصویر داخلش سقف دارد. */
+.dth-trust-box{background:#fff;border-radius:12px;padding:10px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:120px;min-height:74px;flex:0 0 auto}
+.dth-trust-box-t{font-size:11px;font-weight:700;color:#5b5f77;white-space:nowrap}
+.dth-trust-box-c{display:flex;align-items:center;justify-content:center;line-height:0;max-width:170px}
+.dth-trust-box-c img,.dth-trust-box-c svg,.dth-trust-box-c iframe,.dth-trust-box-c a img{max-height:76px;max-width:160px;width:auto;height:auto;object-fit:contain}
+.dth-trust-box-c a{display:flex;align-items:center;justify-content:center}
+
+/* ---------- ریسپانسیو ---------- */
+@media (max-width:960px){
+	.dhm-site-head .dhm-nav,.dhm-site-head .dhm-cta{display:none}
+	.dhm-burger{display:inline-flex}
+	.dhm-feats,.dhm-plans,.dhm-testis,.dhm-steps{grid-template-columns:repeat(2,1fr)}
+	.dhm-steps::before{display:none}
+	.dhm-hero h1{font-size:28px}
+	.dhm-home .dhm-sec{padding:44px 0}
+	.dth-about,.dth-contact,.dth-download{grid-template-columns:1fr}
+	.dth-posts{grid-template-columns:repeat(2,1fr)}
+	.dth-footer-in{grid-template-columns:1fr 1fr}
+	/* v2.0.0 — هیروی کارت‌ها در تبلت: ستون‌ها زیر هم، صحنه کوتاه‌تر */
+	.dhm-hero2-in{grid-template-columns:1fr;padding:40px 20px 60px}
+	.dhm-hero2-stage{min-height:540px;max-width:560px;margin:0 auto;width:100%}
+	.dhm-hero2 h1{font-size:30px}
+}
+@media (max-width:782px){
+	body.admin-bar .dhm-site-head,body.admin-bar #dth-progress{top:46px}
+}
+@media (max-width:560px){
+	.dhm-feats,.dhm-plans,.dhm-testis,.dhm-steps,.dhm-home .dhm-stats{grid-template-columns:1fr 1fr}
+	.dhm-feats,.dhm-plans,.dhm-testis{grid-template-columns:1fr}
+	/* v1.0.4 — مورد ۷: فاصله استاندارد متن‌ها و باکس هیرو در موبایل */
+	.dhm-home .dhm-hero{margin:10px 12px 0;border-radius:16px}
+	.dhm-hero-in{padding:34px 18px 40px}
+	.dhm-hero h1{font-size:23px;line-height:1.8;margin:0 0 14px}
+	.dhm-hero-sub{margin:0 0 24px;line-height:2}
+	.dhm-hero-btns{gap:10px}
+	.dhm-hero-points{gap:12px;margin:26px 0 0}
+	.dhm-hero-points li{font-size:12.5px}
+	.dhm-hero-on .dhm-stats{margin:18px 12px 0}
+	.dhm-sec-head h2{font-size:21px}
+	.dhm-in{padding:0 14px}
+	.dhm-cta-band{padding:28px 20px;justify-content:center;text-align:center}
+	.dhm-cta-r{flex-direction:column;text-align:center}
+	.dhm-plan-hot{transform:none}
+	.dth-posts{grid-template-columns:1fr}
+	.dth-frow{grid-template-columns:1fr}
+	.dth-footer-in{grid-template-columns:1fr}
+	.dth-page-hero h1{font-size:22px}
+	/* v2.0.0 — صحنه کارت‌های شناور در موبایل: جمع‌وجور و خوانا */
+	.dhm-hero2 h1{font-size:25px;line-height:1.7}
+	.dhm-hero2 .dhm-hero-sub{font-size:13.5px;margin:0 0 22px}
+	.dhm-hero2-stage{min-height:500px}
+	.dhm-pcard{width:158px;padding:10px}
+	.dhm-pcard-main{width:190px;top:150px;left:86px;padding:12px}
+	.dhm-pcard-main .dhm-pimg{height:110px}
+	.dhm-pimg{height:96px}
+	.dhm-pimg svg{width:44px;height:44px}
+	.dhm-ppos2{right:0;width:152px}
+	.dhm-ppos3{width:148px;left:4px}
+	.dhm-pchip{font-size:11px;padding:7px 11px}
+	.dhm-pnote2{left:70px;top:2px}
+	.dhm-pnote1{right:4px;bottom:70px}
+	.dhm-hero2-stats{gap:18px}
+}
+
+/* v1.0.5 — دکمه برجسته «آموزش استفاده» در هدر (تو چشم، کنار دریافت پلاگین) */
+.dhm-btn-tut{background:var(--dhm-navy);color:#fff!important;border-color:var(--dhm-navy);position:relative}
+.dhm-btn-tut:hover{background:var(--dhm-green);border-color:var(--dhm-green);color:#fff}
+.dhm-btn-tut svg{width:15px;height:15px}
+.dhm-drawer-cta.dhm-btn-tut{width:100%;justify-content:center;margin:2px 0 10px}
+@media (max-width:980px){.dhm-cta .dhm-btn-tut{display:none}}
+
+/* ==================================================================
+ * v2.1.0 — سبک‌های هدر (۴ حالت) + هیروهای جدید (اسپلیت/مداری/فرم)
+ *           + بخش‌های صفحه اصلی (کاتالوگ/ویدیو/مزایا) + سبک‌های پنل
+ * ============================================================== */
+
+/* ---------- سبک‌های هدر ---------- */
+.dhm-site-head.dhm-hs-dark{background:rgba(36,37,54,.93);border-bottom:1px solid rgba(255,255,255,.1)}
+.dhm-hs-dark .dhm-logo,.dhm-hs-dark .dhm-logo-t{color:#fff}
+.dhm-hs-dark .dhm-menu a{color:#c9cbd8}
+.dhm-hs-dark .dhm-menu a:hover,.dhm-hs-dark .dhm-menu .current-menu-item>a,.dhm-hs-dark .dhm-menu .current_page_item>a{color:#6fe3b5}
+.dhm-hs-dark .dhm-menu .sub-menu{background:#2b2c3d;border:1px solid rgba(255,255,255,.12)}
+.dhm-hs-dark .dhm-menu .sub-menu a:hover{background:rgba(255,255,255,.07)}
+.dhm-hs-dark .dhm-burger{color:#fff}
+.dhm-hs-dark .dhm-btn-outline{background:transparent;border-color:rgba(255,255,255,.32);color:#fff}
+.dhm-hs-dark .dhm-btn-outline:hover{border-color:#2fce96;color:#2fce96}
+.dhm-hs-dark .dhm-btn-tut{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
+.dhm-hs-dark .dhm-btn-tut:hover{background:#2fce96;border-color:#2fce96;color:#14332a}
+.dhm-hs-dark .dhm-userchip{background:#2f3044;border-color:#3f4057;color:#e8f7ef}
+.dhm-hs-dark .dhm-userchip:hover{border-color:#2fce96;background:#34354c;color:#6fe3b5}
+.dhm-hs-dark .dhm-userchip-img{border-color:rgba(255,255,255,.25)}
+.dhm-hs-center .dhm-head-in{justify-content:center;flex-wrap:wrap;row-gap:6px}
+.dhm-hs-center .dhm-cta{margin-inline-start:0}
+.dhm-hs-center .dhm-burger{margin-inline-start:0}
+.dhm-site-head.dhm-hs-minimal{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:1px solid #edeff6}
+.dhm-hs-minimal .dhm-nav{display:none}
+.dhm-hs-minimal .dhm-head-in{gap:14px}
+
+/* ---------- هیروهای v2.1 — پایه مشترک ---------- */
+.dhm-home .dhm-hero3{position:relative;overflow:hidden;background:linear-gradient(180deg,#ffffff 0%,#f4f8fb 100%);border-bottom:1px solid var(--dhm-line)}
+.dhm-home .dhm-hero3::before{content:"";position:absolute;top:-170px;inset-inline-end:-120px;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle,rgba(23,161,109,.1),transparent 65%);pointer-events:none}
+.dhm-hero3 h1{font-size:37px;font-weight:900;line-height:1.55;margin:0 0 14px;color:var(--dhm-navy);letter-spacing:-.3px}
+.dhm-hero3 .dhm-hl{color:var(--dhm-green);display:inline-block;position:relative;padding-bottom:6px}
+.dhm-hero3 .dhm-hl::after{content:"";position:absolute;right:0;left:0;bottom:0;height:5px;border-radius:4px;background:linear-gradient(to left,var(--dhm-mint),rgba(47,206,150,.15))}
+.dhm-hero3 .dhm-hero-sub{color:var(--dhm-muted);font-size:15px;max-width:520px;margin:0 0 26px;line-height:2}
+.dhm-hero3 .dhm-badge{margin-bottom:14px}
+.dhm-hero3 .dhm-badge-l{background:#fff;border:1px solid var(--dhm-line);color:var(--dhm-green);box-shadow:0 2px 10px rgba(36,37,54,.05)}
+.dhm-hero3 .dhm-badge-l::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--dhm-mint);box-shadow:0 0 0 3px rgba(47,206,150,.2)}
+.dhm-hero3-center{text-align:center}
+.dhm-hero3-center .dhm-hero-sub{margin-right:auto;margin-left:auto}
+.dhm-hero-btns-center{justify-content:center}
+.dhm-hero3 .dhm-hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+
+/* ---------- هیرو «اسپلیت خلوت» ---------- */
+.dhm-hero3-split .dhm-hero3-in{display:grid;grid-template-columns:1.08fr .92fr;gap:40px;align-items:center;padding:58px 20px 70px}
+.dhm-hero3-art{position:relative;min-height:330px;background-image:radial-gradient(rgba(36,37,54,.12) 1.4px,transparent 1.4px);background-size:19px 19px;border-radius:22px}
+.dhm-h3-dot{position:absolute;border-radius:50%}
+.dhm-h3-dot.d1{width:180px;height:180px;top:26px;inset-inline-start:44px;background:linear-gradient(135deg,#e9f6ee,#d2f0e1);animation:dhmFloaty 7s ease-in-out infinite}
+.dhm-h3-dot.d2{width:92px;height:92px;bottom:34px;inset-inline-end:56px;background:linear-gradient(135deg,#242536,#3a3b55);animation:dhmFloaty 6s ease-in-out .7s infinite}
+.dhm-h3-dot.d3{width:56px;height:56px;top:64px;inset-inline-end:120px;background:linear-gradient(135deg,#2fce96,#17a16d);box-shadow:0 12px 26px rgba(23,161,109,.35);animation:dhmFloaty 5.4s ease-in-out .3s infinite}
+.dhm-h3-ring{position:absolute;width:250px;height:250px;top:50%;inset-inline-start:52%;transform:translate(50%,-50%)}
+
+/* چرخش آرام حلقه */
+@keyframes dhmSpinSlow{to{transform:translate(50%,-50%) rotate(360deg)}}
+.dhm-h3-ring{border:2px dashed rgba(23,161,109,.35);border-radius:50%;animation:dhmSpinSlow 30s linear infinite}
+
+/* ---------- هیرو «مداری» (کارت‌های شناور دو سو) ---------- */
+.dhm-hero3-orbit-in{position:relative;display:flex;justify-content:center;padding:70px 20px 78px;min-height:440px}
+.dhm-hero3-orbit .dhm-hero3-copy{position:relative;z-index:1;max-width:620px;margin:auto 0}
+.dhm-o-title{font-size:42px}
+.dhm-o-card{position:absolute;z-index:0;display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--dhm-line);border-radius:14px;box-shadow:0 16px 36px rgba(36,37,54,.11);padding:11px 16px;max-width:250px;animation:dhmFloaty 6.4s ease-in-out infinite}
+.dhm-o-card b{display:block;font-size:12.5px;color:var(--dhm-navy);line-height:1.65}
+.dhm-o-card div span{font-size:11px;color:var(--dhm-muted);display:block}
+.dhm-o-ic{flex:none;display:inline-flex;align-items:center;justify-content:center;width:35px;height:35px;border-radius:10px}
+.dhm-o-ic svg{width:17px;height:17px}
+.dhm-o-ic.t-gr{background:#e9f6ee;color:#17a16d}
+.dhm-o-ic.t-nv{background:#eceef6;color:#242536}
+.dhm-o-ic.t-mt{background:#e2faf0;color:#0f8a5f}
+.dhm-o-r1{top:48px;right:1%}
+.dhm-o-r2{bottom:56px;right:6%;animation-delay:.8s}
+.dhm-o-l1{top:88px;left:5%;animation-delay:.45s}
+.dhm-o-l2{bottom:34px;left:1%;animation-delay:1.15s}
+
+/* ---------- هیرو «فرم شروع» ---------- */
+.dhm-hero3-lead .dhm-hero3-copy{padding:64px 20px 72px;margin:0 auto;max-width:720px}
+.dhm-lead{display:flex;gap:8px;max-width:510px;margin:0 auto;background:#fff;border:1.5px solid var(--dhm-line);border-radius:14px;padding:7px;box-shadow:0 16px 36px rgba(36,37,54,.1);transition:border-color .15s,box-shadow .15s}
+.dhm-lead:focus-within{border-color:var(--dhm-green);box-shadow:0 0 0 4px rgba(23,161,109,.12),0 16px 36px rgba(36,37,54,.1)}
+.dhm-lead input{flex:1;min-width:0;border:0;background:transparent;padding:10px 14px;font:inherit;font-size:14px;color:var(--dhm-text);outline:none;text-align:left}
+.dhm-lead input::placeholder{color:#9aa0b5}
+.dhm-lead .dhm-btn{flex:none;white-space:nowrap}
+.dhm-lead-ticks{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:18px}
+.dhm-lead-ticks span{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--dhm-muted)}
+.dhm-lead-ticks svg{width:14px;height:14px;color:var(--dhm-green)}
+
+/* ---------- v2.4.5 — هیروی «کارتن سه‌بعدی معلق» (پیام‌های چرخان دور کارتن) ---------- */
+.dhm-home .dhm-hero3d{position:relative;overflow:hidden;background:linear-gradient(180deg,#f2faf6 0%,#f6f8fb 100%);border-bottom:1px solid var(--dhm-line)}
+.dhm-home .dhm-hero3d::before{content:"";position:absolute;top:-180px;inset-inline-start:-120px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(47,206,150,.14),transparent 66%);pointer-events:none}
+.dhm-hero3d-in{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr 1fr;gap:32px;align-items:center;padding:56px 20px 70px}
+.dhm-hero3d-copy h1{font-size:37px;font-weight:900;line-height:1.55;margin:0 0 14px;color:var(--dhm-navy);letter-spacing:-.3px}
+.dhm-hero3d-copy .dhm-hl{color:var(--dhm-green);display:inline-block;position:relative;padding-bottom:6px}
+.dhm-hero3d-copy .dhm-hl::after{content:"";position:absolute;right:0;left:0;bottom:0;height:5px;border-radius:4px;background:linear-gradient(to left,var(--dhm-mint),rgba(47,206,150,.15))}
+.dhm-hero3d-copy .dhm-hero-sub{color:var(--dhm-muted);font-size:15px;max-width:480px;margin:0 0 26px;line-height:2}
+
+.dth-3dbox-wrap{position:relative;min-height:400px;display:flex;align-items:center;justify-content:center}
+
+/* حلقه پیام‌های چرخان */
+.dth-orbit{position:absolute;top:50%;left:50%;width:0;height:0}
+@media (prefers-reduced-motion: no-preference){ .dth-orbit{animation:dthOrbitSpin 28s linear infinite} }
+@keyframes dthOrbitSpin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.dth-orbit-item{position:absolute;top:0;left:0;transform:rotate(var(--a)) translateX(168px)}
+.dth-toast{display:inline-block;transform:rotate(calc(-1 * var(--a)));background:#fff;border:1px solid var(--dhm-line);border-radius:12px;padding:9px 14px;font-size:12px;font-weight:700;color:var(--dhm-navy);white-space:nowrap;box-shadow:0 10px 26px rgba(36,37,54,.1)}
+@media (prefers-reduced-motion: no-preference){ .dth-toast{animation:dthOrbitCounter 28s linear infinite} }
+@keyframes dthOrbitCounter{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+
+/* کارتن سه‌بعدی (CSS خالص — بدون تصویر/فایل خارجی) */
+/* کارتن سه‌بعدی (SVG ایزومتریک — شناور با کمی تاب، بدون چرخش کامل چون تصویر تخت است) */
+.dth-3dbox-stage{position:relative;z-index:2;width:190px}
+@media (prefers-reduced-motion: no-preference){ .dth-3dbox-stage{animation:dthBoxFloat 4s ease-in-out infinite} }
+@keyframes dthBoxFloat{0%,50%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-12px) rotate(-2.5deg)}75%{transform:translateY(-6px) rotate(2deg)}}
+.dth-parcel{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 22px rgba(36,37,54,.1))}
+
+/* ---------- بخش «نمونه کاتالوگ» صفحه اصلی ---------- */
+.dhm-home .dhm-sec-cats{background:#fff}
+.dhm-cats-wrap{margin-top:4px}
+.dhm-cats-empty{background:#f9fbfd;border:1.5px dashed var(--dhm-line);border-radius:14px;padding:30px 18px;text-align:center;color:var(--dhm-muted);font-size:13.5px}
+.dhm-sec-more{text-align:center;margin-top:28px}
+
+/* ---------- بخش «ویدیو آموزش» صفحه اصلی ---------- */
+.dhm-home .dhm-sec-video{background:linear-gradient(180deg,#f6f8fb 0%,#ffffff 100%)}
+.dhm-video-wrap{max-width:840px;margin:2px auto 0}
+.dhm-video-frame{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 22px 48px rgba(36,37,54,.16);aspect-ratio:16/9;background:#12132a}
+.dhm-video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.dhm-video{display:block;width:100%;border-radius:18px;box-shadow:0 22px 48px rgba(36,37,54,.16);background:#12132a}
+.dhm-video-note{display:flex;align-items:center;justify-content:center;gap:7px;color:#166b47;font-size:13px;font-weight:700;margin:16px 0 0}
+.dhm-video-note svg{width:15px;height:15px;color:var(--dhm-green)}
+
+/* ---------- بخش «مزایا» — نوار سرمه‌ای ---------- */
+.dhm-ben-band{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.15fr;gap:36px;background:linear-gradient(135deg,#242536 0%,#2e2f47 100%);border-radius:22px;padding:42px 40px;color:#fff}
+.dhm-ben-band::before{content:"";position:absolute;top:-140px;inset-inline-start:-90px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(47,206,150,.2),transparent 65%);pointer-events:none}
+.dhm-ben-r{position:relative;z-index:1}
+.dhm-ben-r h2{font-size:25px;font-weight:900;margin:14px 0 10px;color:#fff}
+.dhm-ben-r p{color:rgba(255,255,255,.72);font-size:14px;margin:0 0 24px;line-height:2}
+.dhm-ben-list{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:center}
+.dhm-ben-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 14px;font-size:13px;font-weight:700;line-height:1.7}
+.dhm-ben-ic{flex:none;display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:8px;background:rgba(47,206,150,.16);color:var(--dhm-mint)}
+.dhm-ben-ic svg{width:13px;height:13px}
+
+/* ---------- سبک‌های برگه «پنل کاربری» ---------- */
+.dhm-home .dth-panelsec{padding:30px 0 54px}
+.dhm-home .dth-panel-bare{padding-top:10px}
+.dhm-home .dth-panel-gray{background:#f3f5f8}
+.dth-panelcard{background:#fff;border:1px solid var(--dhm-line);border-radius:18px;box-shadow:0 16px 38px rgba(36,37,54,.08);padding:26px 24px}
+
+/* ---------- ریسپانسیو v2.1.0 ---------- */
+@media (max-width:960px){
+	.dhm-hero3 h1{font-size:29px}
+	.dhm-o-title{font-size:32px}
+	.dhm-hero3-split .dhm-hero3-in{grid-template-columns:1fr;padding:42px 20px 56px}
+	.dhm-hero3d-in{grid-template-columns:1fr;padding:42px 20px 56px}
+	.dhm-hero3d-copy{text-align:center;order:-1}
+	.dhm-hero3d-copy .dhm-hero-sub{margin-right:auto;margin-left:auto}
+	.dhm-hero3d-copy .dhm-hero-btns{justify-content:center}
+	.dth-3dbox-wrap{min-height:280px}
+	.dth-orbit-item{transform:rotate(var(--a)) translateX(110px)}
+	.dth-toast{font-size:10.5px;padding:7px 11px}
+	.dth-3dbox-stage{width:140px}
+	.dhm-hero3-art{min-height:230px;max-width:480px;width:100%;margin:0 auto}
+	.dhm-ben-band{grid-template-columns:1fr;gap:24px;padding:32px 24px}
+	.dhm-hero3-orbit-in{flex-direction:column;align-items:stretch;gap:14px;min-height:0;padding:46px 20px 58px}
+	.dhm-hero3-orbit .dhm-hero3-copy{order:-1;text-align:center;margin:0 auto}
+	.dhm-o-card{position:static;max-width:340px;margin:0 auto;width:100%;animation:none}
+}
+@media (max-width:560px){
+	.dhm-hero3 h1{font-size:23px;line-height:1.8}
+	.dhm-hero3 .dhm-hero-sub{font-size:13.5px;margin:0 0 22px}
+	.dhm-o-title{font-size:26px}
+	.dhm-hero3-lead .dhm-hero3-copy{padding:44px 16px 52px}
+	.dhm-lead{flex-direction:column;border-radius:16px;padding:9px}
+	.dhm-lead input{padding:10px 12px;text-align:center}
+	.dhm-lead .dhm-btn{justify-content:center;width:100%}
+	.dhm-ben-band{padding:26px 18px;border-radius:18px}
+	.dhm-ben-list{grid-template-columns:1fr}
+	.dhm-ben-r h2{font-size:21px}
+	.dhm-video-frame,.dhm-video{border-radius:14px}
+	.dth-panelcard{padding:18px 14px;border-radius:14px}
+	.dhm-hero3-orbit-in{padding:40px 16px 48px}
+	.dhm-hero3-split .dhm-hero3-in{padding:36px 16px 46px}
+	.dhm-hero3-art{min-height:190px}
+}
+
+/* ==================================================================
+ * v2.1.1 — پنج سبک فوتر (کلاس dth-fs-*): columns(پیش‌فرض/کلاسیکِ موجود)
+ *          | center (وسط‌چین) | deep (عمیق) | split (دوپاره) | slim (فشرده)
+ * ============================================================== */
+
+/* ۲) وسط‌چین مینیمال — لوگو و لینک‌ها در مرکز */
+.dth-fs-center .dth-footer-in{display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:42px 20px 24px}
+.dth-fs-center .dth-fcol h4{display:none}
+.dth-fs-center .dth-flist{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 20px}
+.dth-fs-center .dth-fabout{margin:6px auto 0;max-width:560px}
+.dth-fs-center .dth-ftrust{justify-content:center}
+.dth-fs-center .dth-fcontact li{justify-content:flex-start}
+.dth-fs-center .dth-copy .dhm-in{justify-content:center;text-align:center}
+
+/* ۳) سرمه‌ای عمیق — خط مرزی سبز بالای فوتر */
+.dth-footer.dth-fs-deep{background:#191a27;border-top:3px solid var(--dhm-green)}
+.dth-fs-deep .dth-footer-in{gap:34px}
+.dth-fs-deep .dhm-ldot{background:var(--dhm-mint)}
+.dth-fs-deep .dth-fcol h4::after{background:var(--dhm-mint);width:34px;height:3px}
+.dth-fs-deep .dth-flist a:hover{color:#fff}
+.dth-fs-deep .dth-fabout{color:rgba(255,255,255,.66)}
+
+/* ۴) دوپاره — برند پهن بالا، ستون‌های لینک پایین */
+.dth-fs-split .dth-footer-in{grid-template-columns:1fr 1fr 1fr;grid-template-areas:"brand brand brand" "links access contact";row-gap:22px;padding-bottom:24px}
+.dth-fs-split .dth-fcol-brand{grid-area:brand;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 30px}
+.dth-fs-split .dth-fcol-brand .dth-fabout{margin:0;flex:1 1 360px}
+.dth-fs-split .dth-fcol-brand .dth-ftrust{margin:0 0 0 auto}
+.dth-fs-split .dth-fcol-brand+.dth-fcol{grid-area:links}
+.dth-fs-split .dth-fcol:nth-child(3){grid-area:access}
+.dth-fs-split .dth-fcol:nth-child(4){grid-area:contact}
+
+/* ۵) نوار فشرده تک‌ردیفه */
+.dth-fs-slim .dth-footer-in{display:flex;flex-wrap:wrap;align-items:center;gap:8px 30px;padding:22px 20px}
+.dth-fs-slim .dth-fcol h4{display:none}
+.dth-fs-slim .dth-fabout,.dth-fs-slim .dth-ftrust{display:none}
+.dth-fs-slim .dth-flist{display:flex;flex-wrap:wrap;gap:4px 18px}
+.dth-fs-slim .dth-fcontact{display:flex;flex-wrap:wrap;gap:6px 20px;margin-inline-start:auto}
+.dth-fs-slim .dth-copy .dhm-in{justify-content:center}
+
+/* ریسپانسیو سبک‌های فوتر */
+@media (max-width:960px){
+	.dth-fs-split .dth-footer-in{grid-template-columns:1fr 1fr;grid-template-areas:"brand brand" "links access" "contact contact"}
+	.dth-fs-slim .dth-fcontact{margin-inline-start:0}
+}
+@media (max-width:560px){
+	.dth-fs-split .dth-footer-in{grid-template-columns:1fr;grid-template-areas:"brand" "links" "access" "contact"}
+	.dth-fs-slim .dth-footer-in{flex-direction:column;align-items:flex-start;gap:14px}
+}
+
+/* =========================================================
+ * v2.2.0 — دارک‌مود کاربرمحور (سوییچ آیکونی در هدر — چپ‌ترین آیتم)
+ * اسکوپ: html.dhm-dark ← کلاس روی <html> که اسکریپت مدیریتش را می‌کند
+ * همهٔ بخش‌ها (هدر/کشو/هیروها/کارت‌ها/فرم‌ها/صفحات/ووکامرس/فوتر) با هم هماهنگ‌اند.
+ * ========================================================= */
+
+/* ---------- دکمه سوییچ (هر دو حالت) ---------- */
+.dhm-theme-toggle{position:relative;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;background:transparent;border:1.5px solid var(--dhm-line,#e6e8ef);color:var(--dhm-navy,#242536);cursor:pointer;padding:0;flex-shrink:0;transition:border-color .18s,color .18s,transform .18s}
+.dhm-theme-toggle:hover{border-color:var(--dhm-green,#17a16d);color:var(--dhm-green,#17a16d);transform:translateY(-1px)}
+.dhm-theme-toggle:focus-visible{outline:2px solid var(--dhm-green,#17a16d);outline-offset:2px}
+.dhm-theme-toggle svg{display:block}
+html.dhm-dark .dhm-tt-moon{display:none}
+html:not(.dhm-dark) .dhm-tt-sun{display:none}
+.dhm-hs-dark .dhm-theme-toggle{color:#fff;border-color:rgba(255,255,255,.3)}
+.dhm-hs-dark .dhm-theme-toggle:hover{color:#2fce96;border-color:#2fce96}
+
+/* ---------- پایه تیره ---------- */
+html.dhm-dark{color-scheme:dark}
+html.dhm-dark,html.dhm-dark body{background:#12142b}
+html.dhm-dark body{color:#dfe3f6}
+html.dhm-dark ::selection{background:#17a16d;color:#fff}
+
+/* متغیرهای برند، نسخهٔ تیره — متن دقیقاً همان سلسله‌مراتب روشن را می‌گیرد */
+html.dhm-dark .dhm-site-head,html.dhm-dark .dhm-drawer,html.dhm-dark .dhm-home,html.dhm-dark .dth-footer{--dhm-green:#2fce96;--dhm-green-dark:#23b684;--dhm-mint:#45dcae;--dhm-navy:#eceef8;--dhm-line:#2e3252;--dhm-bg:#12142b;--dhm-text:#dfe3f6;--dhm-muted:#9aa3c4}
+
+/* ---------- هدر + اعلان + کشو ---------- */
+html.dhm-dark .dhm-announce{background:#0d0f22;color:#e8ebfa}
+html.dhm-dark .dhm-announce a{color:#fff;text-decoration-color:rgba(255,255,255,.4)}
+html.dhm-dark .dhm-site-head{background:rgba(18,20,43,.85);border-bottom-color:#2e3252}
+html.dhm-dark .dhm-site-head.dhm-hs-minimal{background:#12142b;border-bottom-color:#2e3252}
+html.dhm-dark .dhm-site-head.dhm-hs-dark{background:rgba(10,11,26,.94)}
+html.dhm-dark .dhm-menu a{color:#cdd2ec}
+html.dhm-dark .dhm-menu .sub-menu{background:#1b1e3c;border-color:#2e3252;box-shadow:0 16px 34px rgba(0,0,0,.45)}
+html.dhm-dark .dhm-menu .sub-menu a:hover{background:#232648;color:#2fce96}
+html.dhm-dark .dhm-userchip{background:rgba(47,206,150,.09);border-color:rgba(47,206,150,.32);color:#6fe3b5}
+html.dhm-dark .dhm-userchip:hover{border-color:#2fce96;background:rgba(47,206,150,.16);color:#8ff0c6}
+html.dhm-dark .dhm-userchip-img{border-color:rgba(255,255,255,.15)}
+html.dhm-dark .dhm-userchip-drawer small{color:#8fa89b}
+html.dhm-dark .dhm-drawer-nav{background:#1b1e3c;box-shadow:-12px 0 32px rgba(0,0,0,.5)}
+html.dhm-dark .dhm-drawer-nav a:not(.dhm-btn){color:#cdd2ec}
+html.dhm-dark .dhm-drawer-nav a:not(.dhm-btn):hover{background:#232648;color:#2fce96}
+html.dhm-dark .dhm-drawer-close{background:#232648;color:#dfe3f6}
+html.dhm-dark .dhm-drawer-bg{background:rgba(6,7,18,.6)}
+
+/* ---------- دکمه‌ها ---------- */
+html.dhm-dark .dhm-btn-outline{background:#1b1e3c;border-color:#3a3f6b;color:#dfe3f6}
+html.dhm-dark .dhm-btn-outline:hover{border-color:#2fce96;color:#2fce96}
+html.dhm-dark .dhm-btn-tut{background:#323767;border-color:#323767}
+html.dhm-dark .dhm-btn-tut:hover{background:#2fce96;border-color:#2fce96;color:#14332a}
+html.dhm-dark .dhm-pbtn{background:#323767;color:#fff!important}
+html.dhm-dark .dhm-pbtn:hover{background:#2fce96;color:#14332a}
+
+/* ---------- هیروها (گرادیان روشن ← نسخه تیره هماهنگ) ---------- */
+html.dhm-dark .dhm-home .dhm-hero2{background:linear-gradient(180deg,#171a33 0%,#12142b 100%);border-bottom-color:#2e3252}
+html.dhm-dark .dhm-home .dhm-hero3{background:linear-gradient(180deg,#181b36 0%,#12142b 100%);border-bottom-color:#2e3252}
+html.dhm-dark .dhm-hero2-copy .dhm-badge-l,html.dhm-dark .dhm-hero3 .dhm-badge-l{background:#1b1e3c;border-color:#2e3252;color:#2fce96;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+
+/* ---------- سطوح سفید ← سطوح تیره برند‌دار (همگی با هم) ---------- */
+html.dhm-dark .dhm-pcard,html.dhm-dark .dhm-pchip,html.dhm-dark .dhm-stats,html.dhm-dark .dhm-feat,html.dhm-dark .dhm-step-n,html.dhm-dark .dhm-plan,html.dhm-dark .dhm-testi,html.dhm-dark .dhm-faq,html.dhm-dark .dth-about,html.dhm-dark .dth-ci,html.dhm-dark .dth-form,html.dhm-dark .dth-dl-card,html.dhm-dark .dth-dl-steps,html.dhm-dark .dth-pay-n,html.dhm-dark .dth-pay-body,html.dhm-dark .dth-card,html.dhm-dark .dth-comments,html.dhm-dark .dth-woo,html.dhm-dark .dth-404,html.dhm-dark .dth-panelcard,html.dhm-dark .dhm-o-card,html.dhm-dark .dhm-lead,html.dhm-dark .dth-empty{background:#1b1e3c;border-color:#2e3252;box-shadow:0 10px 30px rgba(0,0,0,.22)}
+html.dhm-dark .dhm-feat:hover,html.dhm-dark .dth-card:hover,html.dhm-dark .dhm-testi:hover{border-color:rgba(47,206,150,.5)}
+html.dhm-dark .dhm-step-n{border-color:#2fce96;color:#2fce96}
+html.dhm-dark .dhm-pay-n{border-color:#2e3252;color:#2fce96}
+html.dhm-dark .dth-pay-body:hover{border-color:rgba(47,206,150,.5)}
+html.dhm-dark .dhm-home .dhm-sec-cats{background:#161834}
+html.dhm-dark .dhm-home .dhm-sec-video{background:linear-gradient(180deg,#12142b 0%,#181b36 100%)}
+html.dhm-dark .dhm-h3-dot.d1{background:linear-gradient(135deg,#173f36,#1d3348);opacity:.7}
+
+/* ---------- تینت‌ها و اجزای جزئی ---------- */
+html.dhm-dark .dhm-faq-ic{background:#232648;color:#2fce96}
+html.dhm-dark .dth-comment-list .comment-body{background:#232648}
+html.dhm-dark .dhm-tint-2 .dhm-feat-ic{color:#eceef8;background:rgba(236,238,248,.07)}
+html.dhm-dark .dhm-o-ic.t-gr{background:rgba(47,206,150,.12);color:#2fce96}
+html.dhm-dark .dhm-o-ic.t-nv{background:rgba(236,238,248,.07);color:#eceef8}
+html.dhm-dark .dth-notice-ok,html.dhm-dark .dth-dl-ver{background:rgba(47,206,150,.1);border-color:rgba(47,206,150,.32);color:#6fe3b5}
+html.dhm-dark .dth-note{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.32)}
+html.dhm-dark .dhm-home .page-numbers{background:#1b1e3c;border-color:#2e3252;color:#dfe3f6}
+html.dhm-dark .dhm-home .page-numbers.current{background:#2fce96;border-color:#2fce96;color:#14332a}
+
+/* ---------- فرم‌ها و ورودی‌ها ---------- */
+html.dhm-dark .dth-form input,html.dhm-dark .dth-form textarea,html.dhm-dark .dth-searchbar input,html.dhm-dark .dth-comments .comment-form input:not(.submit),html.dhm-dark .dth-comments .comment-form textarea{background:#14173a;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dth-form input:focus,html.dhm-dark .dth-form textarea:focus,html.dhm-dark .dth-searchbar input:focus{border-color:#2fce96;box-shadow:0 0 0 3px rgba(47,206,150,.16)}
+html.dhm-dark .dhm-lead input{color:#dfe3f6}
+html.dhm-dark .dhm-lead input::placeholder,html.dhm-dark .dth-form ::placeholder{color:#7e86ab}
+html.dhm-dark .dth-woo select,html.dhm-dark .dth-woo input{background:#14173a;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dth-woo table{background:transparent;color:#dfe3f6}
+html.dhm-dark .dth-woo th,html.dhm-dark .dth-woo td{border-color:#2e3252;color:#dfe3f6}
+
+/* ---------- فوتر ---------- */
+html.dhm-dark .dth-footer{--dhm-navy:#0e1026}
+
+/* =========================================================
+ * v2.3.0 — پوشش کامل دارک‌مود همه صفحات (رفع گزارش کاربر با اسکرین‌شات)
+ * بخش‌های تازه: برگه آموزش (dtt)، درباره (پیل‌ها)، کاتالوگ دستیار (dct)،
+ * پنل فروشنده (dvp + ویزارد سفارش)، باکس شروع داشبورد (dgr) + لوگوی دوحالته روشن/تاریک.
+ * همه سلکتورها با html.dhm-dark پیش‌وند شده‌اند؛ استایل‌های درون‌برگه‌ای افزونه‌ها
+ * (که بعد از این فایل چاپ می‌شوند) با همین پیش‌وندِ قوی‌تر بازنویسی می‌شوند.
+ * ========================================================= */
+
+/* ---------- لوگوی دوحالته روشن/تاریک ---------- */
+.dhm-logo-dual .dhm-logo-d{display:none}
+html.dhm-dark .dhm-logo-hasdark .dhm-logo-l{display:none}
+html.dhm-dark .dhm-logo-hasdark .dhm-logo-d{display:block}
+
+/* ---------- برگه‌های داخلی قالب (جای‌مانده‌ها) ---------- */
+html.dhm-dark .dth-about-points li{background:#232648;border-color:#2e3252;color:#dfe3f6}
+html.dhm-dark .dth-content a{color:#2fce96}
+html.dhm-dark .dth-woo .woocommerce-message,html.dhm-dark .dth-woo .woocommerce-info,html.dhm-dark .dth-woo .woocommerce-error{background:#1b1e3c;border-color:rgba(47,206,150,.35);color:#dfe3f6}
+html.dhm-dark .dth-woo .woocommerce-message::before,html.dhm-dark .dth-woo .woocommerce-info::before{color:#2fce96}
+
+/* =========================================================
+ * صفحه آموزش استفاده (dtt — استایل درون‌برگه‌ای tutorial.php)
+ * ========================================================= */
+html.dhm-dark .dtt-cell{background:#1b1e3c;border-color:#2e3252}
+html.dhm-dark .dtt-cell b{color:#eceef8}
+html.dhm-dark .dtt-cell span{color:#9aa3c4}
+html.dhm-dark .dtt-cell .dtt-cell-ic{background:rgba(47,206,150,.12);color:#2fce96}
+html.dhm-dark .dtt-cell .dtt-cell-no{background:#34395e;color:#dfe3f6}
+html.dhm-dark .dtt-cell a{color:#2fce96}
+html.dhm-dark .dtt-tabs{background:#1b1e3c;border-color:#2e3252;box-shadow:0 6px 20px rgba(0,0,0,.28)}
+html.dhm-dark .dtt-tab{background:#232648;color:#9aa3c4}
+html.dhm-dark .dtt-tab small{color:#7e86ab}
+html.dhm-dark .dtt-tab:hover{border-color:rgba(47,206,150,.4)}
+html.dhm-dark .dtt-tab.on{background:#2fce96;color:#14332a}
+html.dhm-dark .dtt-tab.on small{color:#1f5a41}
+html.dhm-dark .dtt-tp{background:#161834;border-color:#2e3252}
+html.dhm-dark .dtt-tp-head h3{color:#eceef8}
+html.dhm-dark .dtt-tp-head p{color:#9aa3c4}
+html.dhm-dark .dtt-time:before{background:linear-gradient(180deg,#2e4157,#232648)}
+html.dhm-dark .dtt-step-no{border-color:#161834}
+html.dhm-dark .dtt-step-card{background:#1b1e3c;border-color:#2e3252}
+html.dhm-dark .dtt-step-card h4{color:#eceef8}
+html.dhm-dark .dtt-step-ic{background:rgba(47,206,150,.12);color:#2fce96}
+html.dhm-dark .dtt-step-card p{color:#c3c9e6}
+html.dhm-dark .dtt-chip-tip{background:rgba(47,206,150,.1);color:#6fe3b5}
+html.dhm-dark .dtt-chip-warn{background:rgba(245,158,11,.12);color:#f5c163}
+html.dhm-dark .dtt-chip-ok{background:rgba(96,165,250,.12);color:#8fb8f5}
+html.dhm-dark .dtt-kbd{background:#232648;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dtt-note{background:rgba(47,206,150,.06);border-color:rgba(47,206,150,.3);color:#bfe9d8}
+html.dhm-dark .dtt-note svg{color:#2fce96}
+html.dhm-dark .dtt-box{background:#1b1e3c;border-color:#2e3252}
+html.dhm-dark .dtt-box h3{color:#eceef8}
+html.dhm-dark .dtt-box h3 svg{color:#2fce96}
+html.dhm-dark .dtt-gi{background:#232648;border-color:#2e3252}
+html.dhm-dark .dtt-gi b{color:#6fe3b5}
+html.dhm-dark .dtt-gi span{color:#9aa3c4}
+html.dhm-dark .dtt-track-code{background:#0e1026}
+html.dhm-dark .dtt-faq details{background:#1b1e3c;border-color:#2e3252}
+html.dhm-dark .dtt-faq summary{color:#eceef8}
+html.dhm-dark .dtt-faq summary svg{color:#2fce96}
+html.dhm-dark .dtt-faq details p{color:#c3c9e6}
+html.dhm-dark .dtt-cta{background:linear-gradient(135deg,#181b36,#0e1026);border:1px solid #2e3252}
+html.dhm-dark .dtt-cta p{color:#9aa3c4}
+
+/* =========================================================
+ * کاتالوگ دستیار (dct — کدکوتاه [dastyar_catalog])
+ * ========================================================= */
+html.dhm-dark .dct-wrap{--dct-green:#2fce96;--dct-green-dark:#23b684;--dct-mint:#45dcae;--dct-dark:#eceef8;--dct-navy:#eceef8;--dct-line:#2e3252;--dct-bg:#232648;--dct-text:#dfe3f6;--dct-muted:#9aa3c4}
+html.dhm-dark .dct-searchbox{background:#1b1e3c;border-color:#2e3252}
+html.dhm-dark .dct-searchbox:focus-within{border-color:#2fce96;box-shadow:0 0 0 3px rgba(47,206,150,.16)}
+html.dhm-dark .dct-select{background:#232648;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dct-select:focus{border-color:#2fce96;background:#232648}
+html.dhm-dark .dct-pop,html.dhm-dark .dct-chip{background:#1b1e3c;border-color:#2e3252;color:#dfe3f6}
+html.dhm-dark .dct-pop:hover{border-color:rgba(245,158,11,.45);color:#f5c163}
+html.dhm-dark .dct-pop-on{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.5);color:#f5c163}
+html.dhm-dark .dct-pop-all{background:#232648;border-color:#343958;color:#9aa3c4}
+html.dhm-dark .dct-chip:hover{border-color:rgba(47,206,150,.45);color:#6fe3b5}
+html.dhm-dark .dct-chip-on{background:rgba(47,206,150,.12);border-color:rgba(47,206,150,.45);color:#6fe3b5}
+html.dhm-dark .dct-more-list{background:#1b1e3c;border-color:#2e3252;box-shadow:0 16px 34px rgba(0,0,0,.5)}
+html.dhm-dark .dct-btn-ghost{background:#232648;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dct-btn-ghost:hover{border-color:#2fce96;color:#2fce96}
+html.dhm-dark .dct-card{background:#1b1e3c;border-color:#2e3252}
+html.dhm-dark .dct-card:hover{border-color:rgba(47,206,150,.45);box-shadow:0 10px 24px rgba(0,0,0,.32)}
+html.dhm-dark .dct-pcat{background:rgba(27,30,60,.94);border-color:#343958;color:#dfe3f6;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+html.dhm-dark .dct-price-lb{background:rgba(47,206,150,.1);color:#6fe3b5;border-color:rgba(47,206,150,.3)}
+html.dhm-dark .dct-price-guest a{color:#9aa3c4;border-bottom-color:#343958}
+html.dhm-dark .dct-vadded,html.dhm-dark .dct-vadd.dct-vadded{background:rgba(47,206,150,.1);color:#6fe3b5;border-color:rgba(47,206,150,.32)}
+html.dhm-dark .dct-vadd-msg{color:#f5c163}
+html.dhm-dark .dct-details{background:#232648;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dct-details:hover{background:#2fce96;color:#14332a;border-color:#2fce96}
+html.dhm-dark .dct-empty{background:#1b1e3c;border-color:#343958;color:#9aa3c4}
+html.dhm-dark .dct-page{background:#1b1e3c;border-color:#2e3252;color:#dfe3f6}
+html.dhm-dark .dct-page:hover{border-color:#2fce96}
+html.dhm-dark .dct-page-on{background:#2fce96!important;color:#14332a!important;border-color:#2fce96}
+html.dhm-dark .dct-cta{background:#1b1e3c;border-color:#2e3252}
+html.dhm-dark .dct-cta-star{background:rgba(47,206,150,.12);color:#2fce96}
+html.dhm-dark .dct-badge{background:#1b1e3c;border-color:#2e3252}
+html.dhm-dark .dct-cm-card{background:#1b1e3c;box-shadow:0 22px 60px rgba(0,0,0,.6)}
+html.dhm-dark .dct-cm-close{background:#232648;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dct-cm-close:hover{border-color:#2fce96;color:#2fce96}
+html.dhm-dark .dct-cm-item{background:#232648;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dct-cm-item:hover{border-color:#2fce96;color:#6fe3b5}
+html.dhm-dark .dct-cm-on{background:rgba(47,206,150,.12);border-color:#2fce96;color:#6fe3b5}
+html.dhm-dark .dct-cats-modal{background:rgba(6,7,18,.6)}
+html.dhm-dark .dct-card .dgr-heart{background:#232648;border-color:#343958}
+
+/* =========================================================
+ * پنل فروشنده (dvp — کدکوتاه [dastyar_vendor_panel])
+ * ========================================================= */
+html.dhm-dark .dvp-wrap{--dvp-green:#2fce96;--dvp-green-dark:#23b684;--dvp-navy:#eceef8;--dvp-line:#2e3252;--dvp-bg:#232648;--dvp-text:#dfe3f6;--dvp-muted:#9aa3c4}
+html.dhm-dark .dvp-userbox,html.dhm-dark .dvp-nav,html.dhm-dark .dvp-card,html.dhm-dark .dvp-stat,html.dhm-dark .dvp-quick-link,html.dhm-dark .dvp-plan{background:#1b1e3c;border-color:#2e3252}
+html.dhm-dark .dvp-avatar{background:#232648}
+html.dhm-dark .dvp-nav-link{color:#cdd2ec}
+html.dhm-dark .dvp-nav-link:hover{background:#232648;color:#eceef8}
+html.dhm-dark .dvp-nav-link.dvp-on{background:#2fce96;color:#14332a}
+html.dhm-dark .dvp-home:hover{background:rgba(47,206,150,.1);color:#2fce96!important}
+html.dhm-dark .dvp-logout:hover{background:rgba(220,38,38,.12)}
+html.dhm-dark .dvp-btn-ghost:hover{background:#2a2e55!important}
+html.dhm-dark .dvp-inline-form input,html.dhm-dark .dvp-grid2 input,html.dhm-dark .dvp-ticket-form input[type=text],html.dhm-dark .dvp-ticket-form textarea{background:#14173a;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dvp-inline-form input:focus,html.dhm-dark .dvp-grid2 input:focus,html.dhm-dark .dvp-ticket-form input:focus,html.dhm-dark .dvp-ticket-form textarea:focus{border-color:#2fce96}
+html.dhm-dark .dvp-othumb{background:#232648}
+html.dhm-dark .dvp-orow,html.dhm-dark .dvp-arow{border-bottom-color:#262a48}
+html.dhm-dark .dvp-table th{background:#232648;color:#9aa3c4;border-bottom-color:#2e3252}
+html.dhm-dark .dvp-table td{border-bottom-color:#262a48;color:#dfe3f6}
+html.dhm-dark .dvp-totals{border-color:#2e3252}
+html.dhm-dark .dvp-totals div{border-bottom-color:#262a48}
+html.dhm-dark .dvp-trackbox{background:#232648;border-color:#343958}
+html.dhm-dark .dvp-copy{background:#232648;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dvp-wallet-hero{background:#1b1e3c;border-right-color:#2fce96;box-shadow:inset 0 0 0 1px #2e3252}
+html.dhm-dark .dvp-promo{background:linear-gradient(135deg,#181b36,#10122a);border:1px solid #2e3252}
+html.dhm-dark .dvp-promo-copy{border-color:rgba(255,255,255,.2);color:#9aa3c4}
+html.dhm-dark .dvp-plan:hover{border-color:#2fce96}
+html.dhm-dark .dvp-plan-pop{border-color:#2fce96}
+html.dhm-dark .dvp-plan-c{background:#232648;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dvp-plan:hover .dvp-plan-c{background:#2fce96;color:#14332a;border-color:#2fce96}
+html.dhm-dark .dvp-plan-a{color:#6fe3b5}
+html.dhm-dark .dvp-tx.plus{background:rgba(47,206,150,.12);color:#6fe3b5}
+html.dhm-dark .dvp-tx.minus{background:rgba(220,38,38,.12);color:#f09a9a}
+html.dhm-dark .dvp-ok{background:rgba(23,161,109,.12);border-color:rgba(47,206,150,.3);color:#6fe3b5}
+html.dhm-dark .dvp-err{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.35);color:#f09a9a}
+html.dhm-dark .dvp-keybox{background:rgba(23,161,109,.08);border-color:rgba(47,206,150,.45)}
+html.dhm-dark .dvp-key{background:#14173a;color:#6fe3b5;border-color:rgba(47,206,150,.45)}
+html.dhm-dark .dvp-conn.on{background:rgba(23,161,109,.1);border-color:rgba(47,206,150,.3);color:#6fe3b5}
+html.dhm-dark .dvp-conn.off{background:rgba(224,168,0,.1);border-color:rgba(224,168,0,.3);color:#f0cd7a}
+html.dhm-dark .dvp-kv th{color:#9aa3c4}
+html.dhm-dark .dvp-kv th,html.dhm-dark .dvp-kv td,html.dhm-dark .dvp-kv tr{border-bottom-color:#262a48}
+html.dhm-dark .dvp-ticket-reply{background:#232648;border-color:#343958}
+html.dhm-dark .dvp-ticket-reply.is-admin{background:rgba(23,161,109,.1);border-color:rgba(47,206,150,.3)}
+html.dhm-dark .dvp-contract-body{color:#dfe3f6}
+html.dhm-dark .dvp-contract-signed{background:rgba(23,161,109,.1);border-color:rgba(47,206,150,.32)}
+html.dhm-dark .dvp-contract-signed strong{color:#6fe3b5}
+html.dhm-dark .dvp-contract-signed span{color:#4fc79b}
+html.dhm-dark .dvp-contract-warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.35);color:#f5c163}
+html.dhm-dark .dvp-cm-card{background:#1b1e3c;box-shadow:0 24px 70px rgba(0,0,0,.6)}
+html.dhm-dark .dvp-cm-ic{background:rgba(47,206,150,.12);color:#2fce96}
+html.dhm-dark .dvp-cm-actions{/* پس‌زمینه و خط از متغیرهای تیره‌شده می‌آیند */}
+html.dhm-dark .dvp-pl-pct{background:rgba(220,38,38,.1);color:#f09a9a;border-color:rgba(220,38,38,.35)}
+html.dhm-dark .dvp-pl-new{color:#f09a9a}
+html.dhm-dark .dvp-pl-item{border-bottom-color:#343958}
+html.dhm-dark .dvp-manual-badge{background:#34395e;color:#dfe3f6}
+html.dhm-dark .dvp-contract-modal{background:rgba(10,11,26,.78)}
+
+/* ویزارد ثبت سفارش دستی و کارت‌های دastyar داخل پنل */
+html.dhm-dark .dvp-content .dastyar-card,html.dhm-dark .dvp-content .dastyar-product-card,html.dhm-dark .dvp-content .dastyar-ship-option,html.dhm-dark .dvp-content .dastyar-gw-btn{background:#1b1e3c;border-color:#2e3252;color:#dfe3f6}
+html.dhm-dark .dvp-content .dastyar-product-card:hover,html.dhm-dark .dvp-content .dastyar-ship-option:hover{border-color:rgba(47,206,150,.45)}
+html.dhm-dark .dvp-content .dastyar-step{background:#232648;border-color:#343958;color:#9aa3c4}
+html.dhm-dark .dvp-content .dastyar-step.active{border-color:#2fce96;color:#6fe3b5}
+html.dhm-dark .dvp-content .dastyar-step.done .dastyar-step-num{background:rgba(47,206,150,.16);color:#6fe3b5}
+html.dhm-dark .dvp-content .dastyar-step.active .dastyar-step-num{background:#2fce96;color:#14332a}
+html.dhm-dark .dvp-content .dastyar-done-box{background:rgba(23,161,109,.08);border-color:rgba(47,206,150,.3)}
+html.dhm-dark .dvp-content .dastyar-modal-box{background:#1b1e3c;box-shadow:0 16px 44px rgba(0,0,0,.55);color:#dfe3f6}
+html.dhm-dark .dvp-content .dastyar-gw-btn:hover{border-color:#2fce96;background:rgba(47,206,150,.08)}
+html.dhm-dark .dvp-content .dastyar-alert-inline{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.35);color:#f09a9a}
+html.dhm-dark .dvp-content .dastyar-manual-form .input-text,html.dhm-dark .dvp-content .dastyar-manual-form select{border-color:#343958!important;background:#14173a;color:#dfe3f6}
+html.dhm-dark .dvp-content .dastyar-manual-form .input-text:focus,html.dhm-dark .dvp-content .dastyar-manual-form select:focus{border-color:#2fce96!important;background:#14173a;box-shadow:0 0 0 3px rgba(47,206,150,.16)}
+html.dhm-dark .dvp-content .dastyar-search-form .input-text{border-color:#343958;background:#14173a;color:#dfe3f6}
+html.dhm-dark .dvp-content #dastyar-wizard .dastyar-step-nav .dastyar-prev{background:#232648!important;border-color:#343958!important;color:#dfe3f6!important}
+html.dhm-dark .dvp-content #dastyar-wizard .dastyar-step-nav .dastyar-prev:hover{border-color:#2fce96!important;color:#6fe3b5!important}
+
+/* =========================================================
+ * باکس «از اینجا شروع کن» و تایم‌لاین سفارش (dgr — هسته دستیار)
+ * ========================================================= */
+html.dhm-dark .dgr-card{background:#1b1e3c;border-color:#2e3252;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+html.dhm-dark .dgr-start{background:linear-gradient(135deg,#1a2f2a,#141f33);border-color:rgba(47,206,150,.32)}
+html.dhm-dark .dgr-start-t{color:#6fe3b5}
+html.dhm-dark .dgr-step{background:#232648;border-color:#343958}
+html.dhm-dark .dgr-step strong{color:#eceef8}
+html.dhm-dark .dgr-step p{color:#9aa3c4}
+html.dhm-dark .dgr-step-n{background:#2fce96;color:#14332a}
+html.dhm-dark .dgr-step-ic{background:rgba(47,206,150,.12);color:#2fce96}
+html.dhm-dark .dgr-start-tut{color:#9aa3c4}
+html.dhm-dark .dgr-start-tut a{color:#6fe3b5}
+html.dhm-dark .dgr-tl{background:linear-gradient(135deg,#16203a,#141a30);border-color:rgba(46,65,87,.9)}
+html.dhm-dark .dgr-tl-step{color:#9aa3c4}
+html.dhm-dark .dgr-tl-dot{background:#232648;border-color:#343958;color:#9aa3c4}
+html.dhm-dark .dgr-tl-step.is-done{color:#6fe3b5}
+html.dhm-dark .dgr-tl-step.is-done .dgr-tl-dot{background:#17a16d;border-color:#17a16d;color:#fff;box-shadow:0 0 0 5px rgba(47,206,150,.18)}
+html.dhm-dark .dgr-tl-bar{background:#343958}
+html.dhm-dark .dgr-tl-bar.is-done{background:#2fce96}
+html.dhm-dark .dgr-tl-stop{color:#f09a9a}
+html.dhm-dark .dgr-tl-stopic{background:rgba(220,38,38,.14);color:#f09a9a}
+html.dhm-dark .dgr-adprev{background:#161834;border-color:#2e3252}
+html.dhm-dark .dgr-adtext{color:#dfe3f6}
+html.dhm-dark .dgr-favs li{border-bottom-color:#262a48}
+html.dhm-dark .dgr-favs a{color:#dfe3f6}
+html.dhm-dark .dgr-favs a:hover{color:#2fce96}
+html.dhm-dark .dgr-heart{background:#232648;border-color:#343958}
+html.dhm-dark .dgr-check-list li.is-done{color:#6fe3b5}
+html.dhm-dark .dgr-check-t{color:#6fe3b5}
+html.dhm-dark .dgr-check-all{border-color:rgba(47,206,150,.4);background:rgba(23,161,109,.08)}
+html.dhm-dark .dgr-ckgo{color:#2fce96}
+html.dhm-dark .dgr-btn.dgr-done{background:#1f5a41}
+
+/* =========================================================
+ * v2.4.0 — پاپ‌آپ مشاوره تلفنی (فرم موبایل هیرو) + پوشش دارک کارت ورود/ثبت‌نام هسته
+ * ========================================================= */
+.dth-leadm{position:fixed;inset:0;z-index:100050;display:none;align-items:center;justify-content:center;padding:22px;font-family:inherit}
+.dth-leadm.on{display:flex}
+.dth-leadm-bg{position:absolute;inset:0;background:rgba(36,37,54,.5);backdrop-filter:blur(3px)}
+.dth-leadm-card{position:relative;background:#fff;border:1px solid #e6ecea;border-radius:20px;box-shadow:0 24px 60px rgba(36,37,54,.25);max-width:400px;width:100%;padding:30px 26px 26px;text-align:center;animation:dthLeadPop .22s ease}
+@keyframes dthLeadPop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.dth-leadm-x{position:absolute;top:12px;inset-inline-start:12px;width:32px;height:32px;border-radius:9px;background:#f6f7fa;border:0;color:#5b5e6e;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0}
+.dth-leadm-x svg{width:14px;height:14px}
+.dth-leadm-x:hover{background:#e9f6ee;color:#17a16d}
+.dth-leadm-ic{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,rgba(23,161,109,.14),rgba(47,206,150,.18));color:#17a16d;margin-bottom:12px}
+.dth-leadm-ic svg{width:26px;height:26px}
+.dth-leadm-okic{background:linear-gradient(135deg,#17a16d,#2fce96);color:#fff}
+.dth-leadm-card h3{margin:0 0 8px;font-size:17.5px;font-weight:900;color:var(--dhm-navy,#242536)}
+.dth-leadm-card p{margin:0 0 14px;font-size:13px;color:var(--dhm-muted,#6b6e84);line-height:2}
+.dth-leadm-phone{display:inline-block;background:#f6f7fa;border:1px solid #e6e8ef;border-radius:10px;padding:6px 18px;font-size:14.5px;font-weight:800;color:#242536;letter-spacing:1px;margin:0 0 16px}
+.dth-leadm-btns{display:flex;flex-direction:column;gap:9px}
+.dth-leadm-btns .dhm-btn{justify-content:center;width:100%}
+.dth-leadm-err{margin:12px 0 0;background:#fdf0f0;border:1px solid #f0c8c8;color:#a52828;border-radius:9px;padding:8px 12px;font-size:12px}
+@media (max-width:480px){.dth-leadm-card{padding:26px 18px 20px}}
+
+/* دارک‌مود پاپ‌آپ */
+html.dhm-dark .dth-leadm-bg{background:rgba(6,7,18,.62)}
+html.dhm-dark .dth-leadm-card{background:#1b1e3c;border-color:#2e3252;box-shadow:0 24px 60px rgba(0,0,0,.55)}
+html.dhm-dark .dth-leadm-x{background:#232648;color:#dfe3f6}
+html.dhm-dark .dth-leadm-x:hover{background:rgba(47,206,150,.14);color:#2fce96}
+html.dhm-dark .dth-leadm-ic{background:rgba(47,206,150,.13);color:#2fce96}
+html.dhm-dark .dth-leadm-okic{background:linear-gradient(135deg,#23b684,#2fce96);color:#14332a}
+html.dhm-dark .dth-leadm-phone{background:#232648;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dth-leadm-err{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.35);color:#f09a9a}
+
+/* =========================================================
+ * پوشش دارک کارت ورود/ثبت‌نام هسته (.dastyar-auth-*) — با بازطراحی v1.10.7 هماهنگ است
+ * ========================================================= */
+html.dhm-dark .dastyar-auth-card{background:#1b1e3c;border-color:#2e3252;box-shadow:0 10px 40px rgba(0,0,0,.4),0 2px 8px rgba(0,0,0,.3)}
+html.dhm-dark .dastyar-tabs{border-bottom-color:#2e3252}
+html.dhm-dark .dastyar-tab{background:#232648;color:#9aa3c4}
+html.dhm-dark .dastyar-tab.active{color:#2fce96;background:#1b1e3c;box-shadow:inset 0 -3px 0 #2fce96}
+html.dhm-dark .dastyar-field label{color:#dfe3f6}
+html.dhm-dark .dastyar-field label small{color:#7e86ab}
+html.dhm-dark .dastyar-field input,html.dhm-dark .dastyar-field select{background:#14173a;border-color:#343958;color:#dfe3f6}
+html.dhm-dark .dastyar-field input:focus,html.dhm-dark .dastyar-field select:focus{border-color:#2fce96;box-shadow:0 0 0 3px rgba(47,206,150,.16)}
+html.dhm-dark .dastyar-field ::placeholder{color:#7e86ab}
+html.dhm-dark .dastyar-ficon{color:#7e86ab}
+html.dhm-dark .dastyar-field input:focus+.dastyar-ficon,html.dhm-dark .dastyar-field select:focus+.dastyar-ficon{color:#2fce96}
+html.dhm-dark .dastyar-remember{color:#9aa3c4}
+html.dhm-dark .dastyar-note{background:rgba(47,206,150,.07);border-color:rgba(47,206,150,.3);color:#8fe3c2}
+html.dhm-dark .dastyar-alert-error{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.35);color:#f09a9a}
+html.dhm-dark .dastyar-alert-ok{background:rgba(47,206,150,.08);border-color:rgba(47,206,150,.3);color:#6fe3b5}
+html.dhm-dark .dastyar-btn-ghost{background:#232648!important;color:#2fce96!important}
+html.dhm-dark .dastyar-lostpass a{color:#2fce96}
+html.dhm-dark .dastyar-otp-step2{border-top-color:#343958}
+html.dhm-dark .dastyar-waiting h2{color:#eceef8}
+html.dhm-dark .dastyar-waiting p{color:#9aa3c4}
+
+/* =========================================================
+ * v2.4.7 — استایل صفحه پرداخت/تسویه استاندارد ووکامرس (سبد خرید، تسویه، پرداخت سفارش)
+ * قبلاً هیچ استایلی نداشت؛ دکمه‌های افزونه درگاه (مثل رنگ بنفش پیش‌فرض زرین‌پال) با
+ * !important به رنگ برند دستیار جایگزین می‌شوند تا با بقیه سایت هماهنگ باشند.
+ * ========================================================= */
+.woocommerce-checkout-review-order-table,.woocommerce-checkout-payment,.woocommerce-order-pay .payment_methods{background:#fff;border:1px solid var(--dhm-line);border-radius:14px;overflow:hidden}
+.woocommerce-checkout-review-order-table{border-collapse:collapse;width:100%}
+.woocommerce-checkout-review-order-table th,.woocommerce-checkout-review-order-table td{padding:12px 16px;border-bottom:1px solid var(--dhm-line);font-size:13.5px;color:var(--dhm-text)}
+.woocommerce-checkout-review-order-table .order-total td,.woocommerce-checkout-review-order-table .order-total th{font-weight:800;color:var(--dhm-navy);font-size:15px;border-bottom:0}
+ul.payment_methods{list-style:none;margin:0;padding:6px}
+ul.payment_methods li{padding:12px 14px;border-bottom:1px solid var(--dhm-line)}
+ul.payment_methods li:last-child{border-bottom:0}
+ul.payment_methods li input[type=radio]{accent-color:var(--dhm-green);margin-inline-end:8px}
+ul.payment_methods li label{font-weight:700;font-size:13.5px;color:var(--dhm-navy)}
+.payment_box{background:var(--dhm-bg);border-radius:10px;padding:12px 14px;margin-top:8px;font-size:12.5px;color:var(--dhm-muted);line-height:1.9}
+.woocommerce-privacy-policy-text{font-size:12px;color:var(--dhm-muted);margin:14px 0}
+.woocommerce-privacy-policy-text a{color:var(--dhm-green);font-weight:700}
+
+/* دکمه پرداخت نهایی — رنگ برند به‌جای رنگ پیش‌فرض افزونه درگاه */
+#place_order,.woocommerce-checkout-payment .button.alt,.woocommerce-page .button.alt,.woocommerce #payment #place_order,.woocommerce a.button.alt{
+	background:var(--dhm-green)!important;border-color:var(--dhm-green)!important;color:#fff!important;
+	border-radius:12px!important;font-weight:800!important;font-size:14.5px!important;padding:13px 30px!important;
+	box-shadow:0 8px 20px rgba(23,161,109,.3)!important;transition:background .15s;font-family:inherit!important
+}
+#place_order:hover,.woocommerce-checkout-payment .button.alt:hover,.woocommerce-page .button.alt:hover,.woocommerce a.button.alt:hover{background:var(--dhm-green-dark)!important;border-color:var(--dhm-green-dark)!important}
+
+/* حالت تاریک — هم‌رنگ با بخش ورود/ثبت‌نام (#1b1e3c / #2e3252 / #dfe3f6) */
+html.dhm-dark .woocommerce-checkout-review-order-table,html.dhm-dark .woocommerce-checkout-payment,html.dhm-dark .woocommerce-order-pay .payment_methods{background:#1b1e3c;border-color:#2e3252}
+html.dhm-dark .woocommerce-checkout-review-order-table th,html.dhm-dark .woocommerce-checkout-review-order-table td{border-color:#2e3252;color:#dfe3f6}
+html.dhm-dark .woocommerce-checkout-review-order-table .order-total td,html.dhm-dark .woocommerce-checkout-review-order-table .order-total th{color:#fff}
+html.dhm-dark ul.payment_methods li{border-color:#2e3252}
+html.dhm-dark ul.payment_methods li label{color:#dfe3f6}
+html.dhm-dark .payment_box{background:#14173a;color:#9aa3c4}
+html.dhm-dark .woocommerce-privacy-policy-text{color:#9aa3c4}
+
+/* ============================================================
+ * v2.4.9 — منوی اپلیکیشنی موبایل (نوار ثابت پایین صفحه)
+ * فقط در موبایل نمایش داده می‌شود؛ دسکتاپ کاملاً پنهان است.
+ * ============================================================ */
+.dth-mobnav{display:none}
+@media (max-width:860px){
+	body.dth-has-mobnav{padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+	.dth-mobnav{
+		display:flex;position:fixed;inset-inline:0;bottom:0;z-index:9000;
+		background:#fff;border-top:1px solid var(--dhm-line);
+		padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+		box-shadow:0 -6px 20px rgba(36,37,54,.08);
+	}
+	.dth-mn-item{
+		flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+		padding:6px 2px;color:var(--dhm-muted);text-decoration:none;font-size:10.5px;font-weight:700;
+		border-radius:10px;transition:color .15s;
+	}
+	.dth-mn-item svg{width:21px;height:21px;stroke-width:1.8}
+	.dth-mn-item.dth-mn-on{color:var(--dhm-green)}
+	.dth-mn-item:active{background:var(--dhm-bg)}
+}
+/* حالت تاریک */
+html.dhm-dark .dth-mobnav{background:#1b1e3c;border-top-color:#2e3252;box-shadow:0 -6px 20px rgba(0,0,0,.35)}
+html.dhm-dark .dth-mn-item{color:#9aa3c4}
+html.dhm-dark .dth-mn-item.dth-mn-on{color:#2fce96}
+html.dhm-dark .dth-mn-item:active{background:#232648}
+
+/* ============================================================
+ * v2.4.9 — پریلود اولیه: بکگراند سفید ثابت + لوگو با افکت اسکن چپ‌به‌راست
+ * ============================================================ */
+#dth-preloader{
+	position:fixed;inset:0;z-index:999999;background:#fff;
+	display:flex;align-items:center;justify-content:center;
+	transition:opacity .45s ease,visibility .45s ease;
+}
+#dth-preloader.dth-pl-hide{opacity:0;visibility:hidden;pointer-events:none}
+.dth-preloader-logo{
+	font-family:"Vazirmatn","IRANSans",Tahoma,sans-serif;
+	font-size:clamp(24px,6vw,38px);font-weight:900;letter-spacing:-.5px;
+	direction:ltr;white-space:nowrap;
+	background-image:linear-gradient(90deg,#242536 25%,#17a16d 50%,#242536 75%);
+	background-size:200% 100%;
+	-webkit-background-clip:text;background-clip:text;
+	-webkit-text-fill-color:transparent;color:transparent;
+	animation:dthPreloaderScan 1.6s linear infinite;
+}
+@keyframes dthPreloaderScan{
+	0%{background-position:200% 0}
+	100%{background-position:-200% 0}
+}
+@media (prefers-reduced-motion: reduce){
+	.dth-preloader-logo{animation:none;background-image:none;-webkit-text-fill-color:#242536;color:#242536}
+}
